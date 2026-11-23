@@ -1,0 +1,35 @@
+import Foundation
+import Observation
+
+struct Benefit: Identifiable, Equatable {
+    let id: String
+    /// SF Symbol name.
+    let symbol: String
+    let text: LocalizedStringResource
+}
+
+@MainActor
+@Observable
+final class WelcomeViewModel {
+    let benefits: [Benefit] = [
+        Benefit(id: "savings", symbol: "dollarsign.circle",
+                text: "Cost and time you'd normally spend become live savings"),
+        Benefit(id: "trophies", symbol: "trophy",
+                text: "Trophies at every hour and day milestone"),
+        Features.ads
+            ? Benefit(id: "ads", symbol: "megaphone",
+                      text: "Free forever, funded by ads — never on relapse screens")
+            : Benefit(id: "free", symbol: "hand.raised",
+                      text: "Free, with no ads and nothing to sign up for"),
+    ]
+
+    private let onAddHabit: () -> Void
+
+    init(onAddHabit: @escaping () -> Void = {}) {
+        self.onAddHabit = onAddHabit
+    }
+
+    func addHabitTapped() {
+        onAddHabit()
+    }
+}

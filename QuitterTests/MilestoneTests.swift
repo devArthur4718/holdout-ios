@@ -1,0 +1,127 @@
+import Foundation
+import Testing
+import UserNotifications
+@testable import Quitter
+
+struct MilestoneTests {
+    var utc: Calendar = {
+        var c = Calendar(identifier: .gregorian)
+        c.timeZone = TimeZone(identifier: "UTC")!
+        return c
+    }()
+
+    func date(_ iso: String) -> Date { try! Date(iso, strategy: .iso8601) }
+    func habit(_ lastDoneAt: String, name: String = "Cigarettes") -> Habit {
+        Habit(id: UUID(), kind: .smoking, name: name, lastDoneAt: date(lastDoneAt), costPerDay: nil, minutesPerDay: nil)
+    }
+
+    @Test func daytimeMilestonesArriveOnTime() {
+        let h = habit("2026-11-18T10:00:00Z")
+        #expect(h.milestoneAlerts(now: h.lastDoneAt, calendar: utc, count: 3) == [
+            MilestoneAlert(days: 1, at: date("2026-11-19T10:00:00Z")),
+            MilestoneAlert(days: 3, at: date("2026-11-21T10:00:00Z")),
+            MilestoneAlert(days: 7, at: date("2026-11-25T10:00:00Z")),
+        ])
+    }
+
+    @Test func lateEveningMilestonesWaitUntilEightTheNextMorning() {
+        let h = habit("2026-11-18T23:30:00Z")
+        #expect(h.milestoneAlerts(now: h.lastDoneAt, calendar: utc, count: 1).first?.at == date("2026-11-20T08:00:00Z"))
+    }
+
+    @Test func earlyMorningMilestonesWaitUntilEight() {
+        let h = habit("2026-11-18T03:00:00Z")
+        #expect(h.milestoneAlerts(now: h.lastDoneAt, calendar: utc, count: 1).first?.at == date("2026-11-19T08:00:00Z"))
+    }
+
+    @Test func aMilestoneReachedInTheNightIsStillDueAtEight() {
+        let h = habit("2026-11-18T03:00:00Z")
+        #expect(h.milestoneAlerts(now: date("2026-11-19T05:00:00Z"), calendar: utc, count: 1)
+            == [MilestoneAlert(days: 1, at: date("2026-11-19T08:00:00Z"))])
+    }
+
+    @Test func onceDeliveredTheNextMilestoneFollows() {
+        let h = habit("2026-11-18T03:00:00Z")
+        #expect(h.milestoneAlerts(now: date("2026-11-19T08:00:00Z"), calendar: utc, count: 1).first?.days == 3)
+    }
+
+    @Test func milestonesAlreadyPassedInTheDayAreNotSent() {
+        let h = habit("2026-11-15T10:00:00Z")
+        #expect(h.milestoneAlerts(now: date("2026-11-18T12:00:00Z"), calendar: utc, count: 1).first?.days == 7)
+    }
+
+    @Test func afterAYearATrophyLandsEveryYear() {
+        let h = habit("2025-01-01T12:00:00Z")
+        #expect(h.milestoneAlerts(now: date("2026-06-01T12:00:00Z"), calendar: utc, count: 2).map(\.days) == [730, 1095])
+    }
+
+    @Test func quietHoursFollowTheLocalClock() {
+        var saoPaulo = Calendar(identifier: .gregorian)
+        saoPaulo.timeZone = TimeZone(identifier: "America/Sao_Paulo")!
+        let h = habit("2026-11-18T01:00:00Z") // 22:00 in São Paulo
+        #expect(h.milestoneAlerts(now: h.lastDoneAt, calendar: saoPaulo, count: 1).first?.at == date("2026-11-19T11:00:00Z"))
+    }
+
+    @Test func notificationsReadNaturally() throws {
+        let h = habit("2026-11-18T10:00:00Z")
+        let first = try #require(MilestoneNotifier.requests(habits: [h], now: h.lastDoneAt, calendar: utc).first)
+        #expect(first.content.title == "Smoke-free for 1 day")
+        #expect(first.content.body == "Another trophy for Cigarettes. Keep going.")
+        #expect(MilestoneNotifier.title(kind: .alcohol, days: 730) == "Alcohol-free for 2 years")
+    }
+
+    @Test func neverMoreThanIOSAllowsAndNearestFirst() {
+        let habits = (0..<20).map { habit("2026-11-18T10:00:00Z", name: "Habit \($0)") }
+        let requests = MilestoneNotifier.requests(habits: habits, now: date("2026-11-18T10:00:00Z"), calendar: utc)
+        #expect(requests.count == MilestoneNotifier.limit)
+        let times = requests.compactMap { ($0.trigger as? UNTimeIntervalNotificationTrigger)?.timeInterval }
+        #expect(times == times.sorted())
+        #expect(Set(requests.map(\.identifier)).count == requests.count)
+    }
+}
+
+@MainActor
+final class FakeMilestones: MilestoneNotifying {
+    var systemSaysYes = true
+    var wanted = false
+    func isOn() async -> Bool { wanted && systemSaysYes }
+    func turnOn() async -> Bool { wanted = systemSaysYes; return systemSaysYes }
+    func turnOff() async { wanted = false }
+}
+
+@MainActor
+struct MilestoneToggleTests {
+    let store = SwiftDataHabitStore.inMemory()
+
+    @Test func settingsTurnsThemOnAndOff() async {
+        let fake = FakeMilestones()
+        let vm = SettingsViewModel(store: store, milestones: fake, onAllDeleted: {})
+        await vm.refreshNotifications()
+        #expect(!vm.milestonesOn)
+        await vm.setMilestones(true)
+        #expect(vm.milestonesOn)
+        await vm.setMilestones(false)
+        #expect(!vm.milestonesOn)
+        #expect(!fake.wanted)
+    }
+
+    @Test func refusedPermissionLeavesThemOffAndSaysSo() async {
+        let fake = FakeMilestones()
+        fake.systemSaysYes = false
+        let vm = SettingsViewModel(store: store, milestones: fake, onAllDeleted: {})
+        await vm.setMilestones(true)
+        #expect(!vm.milestonesOn)
+        #expect(vm.notificationsBlocked)
+    }
+
+    @Test func counterOffersThemAfterTheFirstStart() async throws {
+        let id = try store.add(HabitDraft(kind: .smoking, name: "Cigarettes", lastDoneAt: .now, costPerDay: nil, minutesPerDay: nil))
+        let fake = FakeMilestones()
+        let vm = CounterViewModel(habitId: id, store: store, milestones: fake)
+        await vm.refreshNotifications()
+        #expect(!vm.notificationsOn)
+        await vm.notifyTapped()
+        #expect(vm.notificationsOn)
+        #expect(!vm.notificationsBlocked)
+    }
+}
