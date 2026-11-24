@@ -17,7 +17,7 @@ struct WelcomeView: View {
                     .foregroundStyle(Palette.onSurface)
                     .accessibilityAddTraits(.isHeader)
 
-                Text("Quitter shows how long it's been since you last did it, the money you didn't spend and the time you got back. No account. Your data stays on the device.")
+                Text("Quitter is a simple app to track your progress as you quit certain habits. Whether it's cigarettes, drinking or anything else, you can lean on this tool for some support: it's free, there's no account to sign up for, and all your data stays on your phone.")
                     .font(.body)
                     .foregroundStyle(Palette.onSurfaceVariant)
 

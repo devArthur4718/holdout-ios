@@ -6,7 +6,7 @@ struct WelcomeViewModelTests {
 
     @Test func listsTheThreeBenefitsInOrder() {
         let vm = WelcomeViewModel()
-        #expect(vm.benefits.map(\.id) == ["savings", "trophies", "free"])
+        #expect(vm.benefits.map(\.id) == ["trophies", "free"])
     }
 
     @Test func addHabitTappedCallsNavigation() {

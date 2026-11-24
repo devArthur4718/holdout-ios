@@ -1620,6 +1620,22 @@
         }
       }
     },
+    "Optional. Leave blank if it doesn't apply.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opcional. Déjalo en blanco si no aplica."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Opcional. Deixe em branco se não se aplicar."
+          }
+        }
+      }
+    },
     "Personal best — you are on it": {
       "localizations": {
         "es": {
@@ -1732,6 +1748,22 @@
         }
       }
     },
+    "Quitter is a simple app to track your progress as you quit certain habits. Whether it's cigarettes, drinking or anything else, you can lean on this tool for some support: it's free, there's no account to sign up for, and all your data stays on your phone.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quitter es una app sencilla para seguir tu progreso al dejar ciertos hábitos. Ya sea el cigarrillo, la bebida o cualquier otra cosa, puedes apoyarte en esta herramienta, que es gratuita, sin registro de cuenta y con todos tus datos en tu teléfono, para tener algo de apoyo."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Quitter é um app simples para acompanhar seu progresso ao deixar certos hábitos. Seja cigarro, bebida ou qualquer outra coisa, você pode se apoiar nesta ferramenta, que é gratuita, sem registro de conta e com todos os dados no seu celular, para ter algum apoio."
+          }
+        }
+      }
+    },
     "Quitter is free and ad-supported. Ads never appear while you log a slip.": {
       "localizations": {
         "es": {
@@ -1744,22 +1776,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "O Quitter é grátis e mantido por anúncios. Nunca há anúncios enquanto você registra uma recaída."
-          }
-        }
-      }
-    },
-    "Quitter shows how long it's been since you last did it, the money you didn't spend and the time you got back. No account. Your data stays on the device.": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Quitter muestra cuánto tiempo llevas sin hacerlo, el dinero que no gastaste y el tiempo que recuperaste. Sin cuenta. Tus datos se quedan en el dispositivo."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "O Quitter mostra há quanto tempo você não faz isso, o dinheiro que deixou de gastar e o tempo que ganhou de volta. Sem conta. Seus dados ficam no aparelho."
           }
         }
       }
@@ -1872,22 +1888,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Seção"
-          }
-        }
-      }
-    },
-    "See the money and time you didn't spend add up, live": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mira cómo se suman, en vivo, el dinero y el tiempo que no gastaste"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Veja o dinheiro e o tempo que você deixou de gastar se somando, ao vivo"
           }
         }
       }

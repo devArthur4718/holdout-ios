@@ -77,6 +77,9 @@ struct NewHabitView: View {
                 }
                 .accessibilityElement(children: .contain)
             } footer: {
+                if !viewModel.minutesTooHigh {
+                    Text("Optional. Leave blank if it doesn't apply.")
+                }
                 if viewModel.minutesTooHigh {
                     Text("A day only has \(ArcText.grouped(1_440, locale: .current)) minutes.").foregroundStyle(.red)
                 } else if let projection {

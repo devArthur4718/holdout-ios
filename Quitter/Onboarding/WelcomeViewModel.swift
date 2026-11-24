@@ -12,8 +12,6 @@ struct Benefit: Identifiable, Equatable {
 @Observable
 final class WelcomeViewModel {
     let benefits: [Benefit] = [
-        Benefit(id: "savings", symbol: "dollarsign.circle",
-                text: "See the money and time you didn't spend add up, live"),
         Benefit(id: "trophies", symbol: "trophy",
                 text: "A trophy at every goal: 1 day, 1 week, 30 days, 6 months, 1 year…"),
         Features.ads

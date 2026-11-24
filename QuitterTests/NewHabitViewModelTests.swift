@@ -79,6 +79,12 @@ struct NewHabitViewModelTests {
         #expect(vm.draft == HabitDraft(kind: .smoking, name: "Cigarettes", lastDoneAt: now, costPerDay: 8, minutesPerDay: nil))
     }
 
+    @Test func costAndTimeAreOptional() {
+        let vm = makeVM()
+        #expect(vm.canStart)
+        #expect(vm.draft == HabitDraft(kind: .smoking, name: "Cigarettes", lastDoneAt: now, costPerDay: nil, minutesPerDay: nil))
+    }
+
     @Test func startSavesHabitAndReportsItsId() throws {
         var savedId: UUID?
         let vm = makeVM(onStarted: { savedId = $0 })
