@@ -42,7 +42,7 @@ struct HabitDetailView: View {
         ) {
             Button("Delete", role: .destructive, action: viewModel.deleteHabit)
         } message: {
-            Text("Its counter, slips, urges and reasons are deleted for good. This can't be undone.")
+            Text("Its counter, slips and reasons are deleted for good. This can't be undone.")
         }
         .safeAreaInset(edge: .bottom) { actionBar }
         .onAppear(perform: viewModel.reload)
@@ -60,9 +60,6 @@ struct HabitDetailView: View {
             }, onDelete: {
                 if case .existing(let reason) = target { viewModel.deleteReason(id: reason.id) }
             })
-        }
-        .fullScreenCover(item: $viewModel.urge) { urge in
-            UrgeView(viewModel: urge, onClose: { viewModel.urge = nil })
         }
         .alert("Couldn't save", isPresented: $viewModel.saveFailed) {
             Button("OK", role: .cancel) {}
@@ -114,24 +111,16 @@ struct HabitDetailView: View {
     }
 
     private var actionBar: some View {
-        HStack(spacing: 10) {
-            Button(action: viewModel.urgeTapped) {
-                Label("Urge timer", systemImage: "bolt.fill")
-                    .font(.headline)
-                    .frame(maxWidth: .infinity, minHeight: 50)
-            }
-            .foregroundStyle(Palette.onPrimary)
-            .background(Palette.primary, in: .rect(cornerRadius: Radius.button))
-
-            Button { viewModel.slipSheetOpen = true } label: {
-                Image(systemName: "arrow.counterclockwise")
-                    .font(.headline)
-                    .frame(width: 50, height: 50)
-            }
-            .foregroundStyle(Palette.onErrorContainer)
-            .background(Palette.errorContainer, in: .rect(cornerRadius: Radius.button))
-            .accessibilityLabel("Log slip")
+        // Opens the slip sheet, which asks before anything is reset.
+        Button { viewModel.slipSheetOpen = true } label: {
+            Label("Reset Counter", systemImage: "arrow.counterclockwise")
+                .font(.headline)
+                .frame(maxWidth: .infinity, minHeight: 50)
+                .contentShape(.rect)
         }
+        .buttonStyle(.plain)
+        .foregroundStyle(Palette.onErrorContainer)
+        .background(Palette.errorContainer, in: .rect(cornerRadius: Radius.button))
         .padding(.horizontal, 16)
         .padding(.vertical, 8)
         .background(Palette.background)
@@ -315,7 +304,7 @@ private struct ReasonsSection: View {
     var body: some View {
         VStack(spacing: 10) {
             if reasons.isEmpty {
-                Text("Why are you quitting? Write it in your own words. You will see it when an urge hits.")
+                Text("Why are you quitting? Write it in your own words.")
                     .font(.subheadline)
                     .foregroundStyle(Palette.onSurfaceVariant)
                     .frame(maxWidth: .infinity, alignment: .leading)

@@ -41,6 +41,7 @@ struct LogSlipSheet: View {
                     }
                     .foregroundStyle(Palette.onErrorContainer)
                     .background(Palette.errorContainer, in: .rect(cornerRadius: Radius.button))
+                    .accessibilityIdentifier("confirmSlip")
                 }
                 .font(.subheadline.weight(.medium))
                 .padding(.top, 2)

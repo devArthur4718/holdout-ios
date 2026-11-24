@@ -52,7 +52,7 @@ struct CounterView: View {
                 .padding(.top, 28)
 
                 if Features.ads {
-                    Text("Quitter is free and ad-supported. Ads never appear during urge or slip flows.")
+                    Text("Quitter is free and ad-supported. Ads never appear while you log a slip.")
                         .font(.caption2)
                         .foregroundStyle(Palette.outline)
                 }

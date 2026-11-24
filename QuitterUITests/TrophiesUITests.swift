@@ -1,6 +1,6 @@
 import XCTest
 
-final class TrophiesInsightsUITests: XCTestCase {
+final class TrophiesUITests: XCTestCase {
 
     @MainActor
     func testTrophiesShowEarnedAndNextAndTakeAPersonalGoal() {
@@ -30,34 +30,5 @@ final class TrophiesInsightsUITests: XCTestCase {
 
         XCTAssertTrue(app.staticTexts["Next trophy — Beach trip"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.descendants(matching: .any)["Personal goal: Beach trip, 15 days, not earned yet. Next"].exists)
-    }
-
-    @MainActor
-    func testInsightsCountASlipInItsPartOfTheDay() {
-        let app = XCUIApplication()
-        app.launchArguments = ["-uiTesting", "-uiTestingHabitDaysAgo", "3", "-AppleLanguages", "(en)", "-AppleLocale", "en_US"]
-        app.launch()
-
-        app.tabBars.buttons["Insights"].tap()
-        XCTAssertTrue(app.staticTexts["Not enough data yet — this fills in as you log slips and urges."].waitForExistence(timeout: 5))
-        XCTAssertTrue(app.staticTexts["Past streaks show up here after a slip."].exists)
-
-        app.tabBars.buttons["Today"].tap()
-        app.buttons["Log slip"].tap()
-        app.buttons["Reset counter"].tap()
-        XCTAssertTrue(app.staticTexts["toast"].waitForExistence(timeout: 5))
-
-        let hour = Calendar.current.component(.hour, from: .now)
-        let part = switch hour {
-        case 5..<12: "Morning"
-        case 12..<17: "Afternoon"
-        case 17..<22: "Evening"
-        default: "Night"
-        }
-        app.tabBars.buttons["Insights"].tap()
-        XCTAssertTrue(app.descendants(matching: .any)["\(part): 1 slip, 0 urges"].waitForExistence(timeout: 5))
-        let any = app.descendants(matching: .any)
-        XCTAssertTrue(any.matching(NSPredicate(format: "label CONTAINS %@", "Best")).firstMatch.exists)
-        XCTAssertTrue(any.matching(NSPredicate(format: "label CONTAINS %@", "Current")).firstMatch.exists)
     }
 }

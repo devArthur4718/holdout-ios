@@ -51,7 +51,7 @@ struct SettingsView: View {
                     Label {
                         VStack(alignment: .leading, spacing: 2) {
                             Text("Export as CSV").foregroundStyle(Palette.onSurface)
-                            Text("Habits, slips, urges and reasons, for any spreadsheet")
+                            Text("Habits, slips and reasons, for any spreadsheet")
                                 .font(.footnote)
                                 .foregroundStyle(Palette.onSurfaceVariant)
                         }
@@ -96,7 +96,7 @@ struct SettingsView: View {
         .confirmationDialog("Delete everything?", isPresented: $confirmDelete, titleVisibility: .visible) {
             Button("Delete everything", role: .destructive, action: viewModel.deleteAll)
         } message: {
-            Text("All habits, slips, urges and reasons are deleted from this phone. This can't be undone. Export first if you want a copy.")
+            Text("All habits, slips and reasons are deleted from this phone. This can't be undone. Export first if you want a copy.")
         }
         .task(id: scenePhase) { await viewModel.refreshNotifications() }
         .alert("Notifications are off for Quitter.", isPresented: $viewModel.notificationsBlocked) {

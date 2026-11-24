@@ -98,7 +98,7 @@ enum SlipTrigger: String, CaseIterable, Identifiable {
     }
 }
 
-/// Why the user is quitting, in their own words. Shown on the habit and during urges.
+/// Why the user is quitting, in their own words. Shown on the habit.
 struct Reason: Equatable, Identifiable {
     let id: UUID
     let text: String

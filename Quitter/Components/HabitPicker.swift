@@ -1,7 +1,7 @@
 import Observation
 import SwiftUI
 
-/// The habit picked on the Trophies and Insights tabs, shared by both while the app runs.
+/// The habit picked on the Trophies tab, kept while the app runs.
 @MainActor
 @Observable
 final class HabitSelection {
@@ -42,7 +42,7 @@ struct HabitPicker: View {
     }
 }
 
-/// The shared "no habits" state of the Trophies and Insights tabs.
+/// The "no habits" state of the Trophies tab.
 struct NoHabitsView: View {
     let message: LocalizedStringKey
     let onAddHabit: () -> Void

@@ -10,7 +10,6 @@ struct SettingsTests {
     func addHabit() throws -> UUID {
         let id = try store.add(HabitDraft(kind: .alcohol, name: "Wine", lastDoneAt: start, costPerDay: 8, minutesPerDay: 60))
         try store.addReason(habitId: id, text: "Sleep", at: start)
-        try store.logUrge(habitId: id, startedAt: start, endedAt: start.addingTimeInterval(300))
         _ = try store.logSlip(habitId: id, at: start.addingTimeInterval(86_400), trigger: .stress)
         return id
     }
@@ -46,7 +45,6 @@ struct SettingsTests {
         #expect(vm.habit == nil)
         #expect(store.slips(habitId: id).isEmpty)
         #expect(store.reasons(habitId: id).isEmpty)
-        #expect(store.countUrges(habitId: id, since: .distantPast) == 0)
         #expect(store.allHabits().map(\.id) == [other])
     }
 
@@ -66,14 +64,12 @@ struct SettingsTests {
         let csv = buildExportCSV(
             habits: [habit],
             slips: [Slip(habitId: id, at: start, trigger: .stress)],
-            urges: [(habitId: id, startedAt: start, endedAt: start.addingTimeInterval(300))],
             reasons: [(habitId: id, createdAt: start, text: "She said \"stop\"")]
         )
         let rows = csv.components(separatedBy: "\r\n")
         #expect(rows[0] == "type,habit,kind,start,end,detail")
         #expect(rows[1] == "habit,\"Cigs, rolled\",smoking,2026-11-18T11:06:40Z,,cost per day: 11.9; minutes per day: 90")
         #expect(rows[2] == "slip,\"Cigs, rolled\",,2026-11-18T11:06:40Z,,stress")
-        #expect(rows[3] == "urge,\"Cigs, rolled\",,2026-11-18T11:06:40Z,2026-11-18T11:11:40Z,")
-        #expect(rows[4] == "reason,\"Cigs, rolled\",,2026-11-18T11:06:40Z,,\"She said \"\"stop\"\"\"")
+        #expect(rows[3] == "reason,\"Cigs, rolled\",,2026-11-18T11:06:40Z,,\"She said \"\"stop\"\"\"")
     }
 }

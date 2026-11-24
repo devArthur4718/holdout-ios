@@ -43,26 +43,18 @@ final class OnboardingFlowUITests: XCTestCase {
         XCTAssertTrue(app.buttons["Online poker"].exists) // its chip
         XCTAssertTrue(app.tabBars.buttons["Today"].exists)
 
-        // Logging a slip asks first, then restarts the counter.
-        app.buttons["Log slip"].tap()
+        // Resetting the counter asks first (it logs a slip), then restarts it.
+        XCTAssertFalse(app.buttons["I have an urge"].exists)
+        app.buttons["Reset Counter"].tap()
         XCTAssertTrue(app.staticTexts["Log a slip"].waitForExistence(timeout: 5))
         app.buttons["Stress"].tap()
         XCTAssertTrue(app.buttons["Stress"].isSelected)
-        app.buttons["Reset counter"].tap()
+        app.buttons["confirmSlip"].tap()
         XCTAssertTrue(app.staticTexts["toast"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["toast"].label.hasPrefix("Counter reset"))
         XCTAssertFalse(app.staticTexts["Log a slip"].exists)
 
-        // The urge timer runs, and riding it out is confirmed on the home.
-        XCTAssertTrue(app.staticTexts["toast"].waitForNonExistence(timeout: 6))
-        app.buttons["I have an urge"].tap()
-        XCTAssertTrue(app.staticTexts["RIDE IT OUT"].waitForExistence(timeout: 5))
-        XCTAssertTrue(app.staticTexts["Breathe in for four. Hold for four. Out for six."].exists)
-        app.buttons["I got through it"].tap()
-        XCTAssertTrue(app.staticTexts["toast"].waitForExistence(timeout: 5))
-        XCTAssertEqual(app.staticTexts["toast"].label, "Urge logged and outlasted. That is 1 this month.")
-
-        // The habit's detail: tabs, and a reason that the urge timer then shows.
+        // The habit's detail: tabs and reasons.
         XCTAssertTrue(app.staticTexts["toast"].waitForNonExistence(timeout: 6))
         app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Next trophy")).firstMatch.tap()
         XCTAssertTrue(app.staticTexts["Online poker"].waitForExistence(timeout: 5))
@@ -75,9 +67,8 @@ final class OnboardingFlowUITests: XCTestCase {
         reasonField.typeText("For my lungs")
         app.buttons["Save"].tap()
         XCTAssertTrue(app.staticTexts["For my lungs"].waitForExistence(timeout: 5))
-        app.buttons["Urge timer"].tap()
-        XCTAssertTrue(app.staticTexts["“For my lungs”"].waitForExistence(timeout: 5))
-        app.buttons["Close"].tap()
+        XCTAssertFalse(app.buttons["Urge timer"].exists)
+        XCTAssertTrue(app.buttons["Reset Counter"].exists)
         app.navigationBars.buttons.firstMatch.tap() // Back
         XCTAssertTrue(app.navigationBars["Today"].waitForExistence(timeout: 5))
 

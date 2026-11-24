@@ -58,7 +58,8 @@ final class ReasonRecord {
     }
 }
 
-/// An urge the user rode out.
+/// An urge the user rode out, from the removed urge timer. Only in SchemaV1 and V2, so older
+/// databases can still be read and migrated; SchemaV3 drops it.
 @Model
 final class UrgeRecord {
     var habitId: UUID
@@ -72,7 +73,7 @@ final class UrgeRecord {
     }
 }
 
-/// One logged slip, kept for insights later.
+/// One logged slip.
 @Model
 final class SlipRecord {
     var habitId: UUID

@@ -1,11 +1,10 @@
 import Foundation
 
-/// One CSV with a row per habit, slip, urge, reason and personal goal, so it opens in any spreadsheet.
+/// One CSV with a row per habit, slip, reason and personal goal, so it opens in any spreadsheet.
 /// Times are UTC in ISO 8601, e.g. 2026-11-18T21:30:00Z.
 func buildExportCSV(
     habits: [Habit],
     slips: [Slip],
-    urges: [(habitId: UUID, startedAt: Date, endedAt: Date)],
     reasons: [(habitId: UUID, createdAt: Date, text: String)],
     goals: [PersonalGoal] = []
 ) -> String {
@@ -22,9 +21,6 @@ func buildExportCSV(
     }
     for slip in slips {
         rows.append(["slip", names[slip.habitId] ?? "", "", time(slip.at), "", slip.trigger?.rawValue ?? ""])
-    }
-    for urge in urges {
-        rows.append(["urge", names[urge.habitId] ?? "", "", time(urge.startedAt), time(urge.endedAt), ""])
     }
     for reason in reasons {
         rows.append(["reason", names[reason.habitId] ?? "", "", time(reason.createdAt), "", reason.text])

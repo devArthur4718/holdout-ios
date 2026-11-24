@@ -1,22 +1,6 @@
 {
   "sourceLanguage": "en",
   "strings": {
-    "%@ %@ left": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "quedan %1$@ y %2$@"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "faltam %1$@ e %2$@"
-          }
-        }
-      }
-    },
     "%@ / day": {
       "localizations": {
         "es": {
@@ -113,7 +97,7 @@
         }
       }
     },
-    "%@: %@, %@": {
+    "%@: %@": {
       "shouldTranslate": false
     },
     "%@: you made it to %@. Another trophy — keep going.": {
@@ -276,122 +260,6 @@
         }
       }
     },
-    "%lld slips": {
-      "localizations": {
-        "en": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld slip"
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld slips"
-                }
-              }
-            }
-          }
-        },
-        "es": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld recaída"
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld recaídas"
-                }
-              }
-            }
-          }
-        },
-        "pt-BR": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld recaída"
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld recaídas"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "%lld urges": {
-      "localizations": {
-        "en": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld urge"
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld urges"
-                }
-              }
-            }
-          }
-        },
-        "es": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld antojo"
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld antojos"
-                }
-              }
-            }
-          }
-        },
-        "pt-BR": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld vontade"
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "%lld vontades"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
     "%lld years": {
       "localizations": {
         "en": {
@@ -536,22 +404,6 @@
         }
       }
     },
-    "Add a habit to see when it's hardest and how your streaks add up.": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Agrega un hábito para ver cuándo es más difícil y cómo se suman tus rachas."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Adicione um hábito para ver quando é mais difícil e como suas sequências se somam."
-          }
-        }
-      }
-    },
     "Add a habit to start earning trophies.": {
       "localizations": {
         "es": {
@@ -648,22 +500,6 @@
         }
       }
     },
-    "Afternoon": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tarde"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tarde"
-          }
-        }
-      }
-    },
     "Alcohol": {
       "localizations": {
         "es": {
@@ -696,18 +532,18 @@
         }
       }
     },
-    "All habits, slips, urges and reasons are deleted from this phone. This can't be undone. Export first if you want a copy.": {
+    "All habits, slips and reasons are deleted from this phone. This can't be undone. Export first if you want a copy.": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Todos los hábitos, recaídas, antojos y motivos se borrarán de este teléfono. No se puede deshacer. Exporta antes si quieres una copia."
+            "value": "Todos los hábitos, recaídas y motivos se borrarán de este teléfono. No se puede deshacer. Exporta antes si quieres una copia."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Todos os hábitos, recaídas, vontades e motivos serão apagados deste celular. Não dá para desfazer. Exporte antes se quiser uma cópia."
+            "value": "Todos os hábitos, recaídas e motivos serão apagados deste celular. Não dá para desfazer. Exporte antes se quiser uma cópia."
           }
         }
       }
@@ -724,22 +560,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Todos os troféus"
-          }
-        }
-      }
-    },
-    "Almost through. Notice it already fading.": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Casi lo logras. Fíjate cómo ya se está yendo."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Quase lá. Repare como já está passando."
           }
         }
       }
@@ -792,22 +612,6 @@
         }
       }
     },
-    "Best": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mejor"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Melhor"
-          }
-        }
-      }
-    },
     "Bet-free for": {
       "localizations": {
         "es": {
@@ -836,22 +640,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tédio"
-          }
-        }
-      }
-    },
-    "Breathe in for four. Hold for four. Out for six.": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Inhala contando hasta cuatro. Sostén cuatro. Exhala en seis."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Inspire contando até quatro. Segure por quatro. Solte em seis."
           }
         }
       }
@@ -916,22 +704,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Limpo"
-          }
-        }
-      }
-    },
-    "Close": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cerrar"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Fechar"
           }
         }
       }
@@ -1032,22 +804,6 @@
         }
       }
     },
-    "Couldn't save the urge": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "No se pudo guardar el antojo"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Não foi possível salvar a vontade"
-          }
-        }
-      }
-    },
     "Counter reset.": {
       "localizations": {
         "es": {
@@ -1076,38 +832,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Contador zerado. Sua maior sequência, de %@, continua salva."
-          }
-        }
-      }
-    },
-    "Current": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Actual"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Atual"
-          }
-        }
-      }
-    },
-    "Day of the week": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Día de la semana"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Dia da semana"
           }
         }
       }
@@ -1352,22 +1076,6 @@
         }
       }
     },
-    "Evening": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Noche"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Noite"
-          }
-        }
-      }
-    },
     "Evening check-in": {
       "localizations": {
         "es": {
@@ -1412,22 +1120,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Exportar como CSV"
-          }
-        }
-      }
-    },
-    "Five minutes. The urge passed — you rode it out.": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cinco minutos. El antojo pasó — lo aguantaste."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Cinco minutos. A vontade passou — você aguentou firme."
           }
         }
       }
@@ -1528,82 +1220,34 @@
         }
       }
     },
-    "Habits, slips, urges and reasons, for any spreadsheet": {
+    "Habits, slips and reasons, for any spreadsheet": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Hábitos, recaídas, antojos y motivos, para cualquier hoja de cálculo"
+            "value": "Hábitos, recaídas y motivos, para cualquier hoja de cálculo"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Hábitos, recaídas, vontades e motivos, para qualquer planilha"
+            "value": "Hábitos, recaídas e motivos, para qualquer planilha"
           }
         }
       }
     },
-    "I got through it": {
+    "Its counter, slips and reasons are deleted for good. This can't be undone.": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Lo superé"
+            "value": "Su contador, recaídas y motivos se borrarán para siempre. No se puede deshacer."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Eu consegui"
-          }
-        }
-      }
-    },
-    "I have an urge": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tengo un antojo"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Estou com vontade"
-          }
-        }
-      }
-    },
-    "Insights": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Análisis"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Análises"
-          }
-        }
-      }
-    },
-    "Its counter, slips, urges and reasons are deleted for good. This can't be undone.": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Su contador, recaídas, antojos y motivos se borrarán para siempre. No se puede deshacer."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "O contador, as recaídas, as vontades e os motivos serão apagados de vez. Não dá para desfazer."
+            "value": "O contador, as recaídas e os motivos serão apagados de vez. Não dá para desfazer."
           }
         }
       }
@@ -1640,22 +1284,6 @@
         }
       }
     },
-    "Log slip": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Registrar recaída"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Registrar recaída"
-          }
-        }
-      }
-    },
     "Money kept": {
       "localizations": {
         "es": {
@@ -1684,22 +1312,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Mais opções"
-          }
-        }
-      }
-    },
-    "Morning": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mañana"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Manhã"
           }
         }
       }
@@ -1816,22 +1428,6 @@
         }
       }
     },
-    "Night": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Madrugada"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Madrugada"
-          }
-        }
-      }
-    },
     "No account, no ads, no tracking. Nothing you enter is sent to us. Your phone's own backup may include it.": {
       "localizations": {
         "es": {
@@ -1892,22 +1488,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sem motivo"
-          }
-        }
-      }
-    },
-    "Not enough data yet — this fills in as you log slips and urges.": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Todavía no hay suficientes datos — esto se completa a medida que registras recaídas y antojos."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Ainda não há dados suficientes — isto se preenche conforme você registra recaídas e vontades."
           }
         }
       }
@@ -2040,22 +1620,6 @@
         }
       }
     },
-    "Past streaks show up here after a slip.": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Las rachas anteriores aparecen aquí después de una recaída."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Sequências anteriores aparecem aqui depois de uma recaída."
-          }
-        }
-      }
-    },
     "Personal best — you are on it": {
       "localizations": {
         "es": {
@@ -2168,18 +1732,18 @@
         }
       }
     },
-    "Quitter is free and ad-supported. Ads never appear during urge or slip flows.": {
+    "Quitter is free and ad-supported. Ads never appear while you log a slip.": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Quitter es gratis y tiene anuncios. Nunca aparecen durante un antojo o una recaída."
+            "value": "Quitter es gratis y tiene anuncios. Nunca aparecen mientras registras una recaída."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "O Quitter é grátis e mantido por anúncios. Nunca há anúncios durante vontades ou recaídas."
+            "value": "O Quitter é grátis e mantido por anúncios. Nunca há anúncios enquanto você registra uma recaída."
           }
         }
       }
@@ -2216,7 +1780,7 @@
         }
       }
     },
-    "Reset counter": {
+    "Reset Counter": {
       "localizations": {
         "es": {
           "stringUnit": {
@@ -2232,18 +1796,18 @@
         }
       }
     },
-    "Ride it out": {
+    "Reset counter": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aguanta"
+            "value": "Reiniciar contador"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Aguente firme"
+            "value": "Zerar contador"
           }
         }
       }
@@ -2344,22 +1908,6 @@
         }
       }
     },
-    "Since %@": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Desde el %@"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Desde %@"
-          }
-        }
-      }
-    },
     "Slip": {
       "localizations": {
         "es": {
@@ -2372,22 +1920,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Recaída"
-          }
-        }
-      }
-    },
-    "Slips": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Recaídas"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Recaídas"
           }
         }
       }
@@ -2520,22 +2052,6 @@
         }
       }
     },
-    "Streak history": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Historial de rachas"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Histórico de sequências"
-          }
-        }
-      }
-    },
     "Stress": {
       "localizations": {
         "es": {
@@ -2632,22 +2148,6 @@
         }
       }
     },
-    "This is the peak. It falls from here — stay with it.": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Este es el pico. Desde aquí baja — quédate con él."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Este é o pico. Daqui para frente só diminui — fique com ele."
-          }
-        }
-      }
-    },
     "Time / day": {
       "localizations": {
         "es": {
@@ -2676,38 +2176,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Tempo de volta"
-          }
-        }
-      }
-    },
-    "Time left": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tiempo restante"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tempo restante"
-          }
-        }
-      }
-    },
-    "Time of day": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Momento del día"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hora do dia"
           }
         }
       }
@@ -2808,78 +2276,6 @@
         }
       }
     },
-    "Urge logged and outlasted. That is %lld this month.": {
-      "localizations": {
-        "es": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Antojo registrado y superado. Es el %lld.º este mes."
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Antojo registrado y superado. Ya van %lld este mes."
-                }
-              }
-            }
-          }
-        },
-        "pt-BR": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Vontade registrada e superada. Foi a %lldª este mês."
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Vontade registrada e superada. Já são %lld este mês."
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "Urge timer": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Temporizador de antojo"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Timer da vontade"
-          }
-        }
-      }
-    },
-    "Urges": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Antojos"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Vontades"
-          }
-        }
-      }
-    },
     "Vape-free for": {
       "localizations": {
         "es": {
@@ -2960,34 +2356,18 @@
         }
       }
     },
-    "When it's hardest": {
+    "Why are you quitting? Write it in your own words.": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Cuándo es más difícil"
+            "value": "¿Por qué lo quieres dejar? Escríbelo con tus palabras."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Quando é mais difícil"
-          }
-        }
-      }
-    },
-    "Why are you quitting? Write it in your own words. You will see it when an urge hits.": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "¿Por qué lo quieres dejar? Escríbelo con tus palabras. Lo verás cuando llegue un antojo."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Por que você quer parar? Escreva com suas palavras. Você vai ver isso quando a vontade bater."
+            "value": "Por que você quer parar? Escreva com suas palavras."
           }
         }
       }
@@ -3068,22 +2448,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Seus dados"
-          }
-        }
-      }
-    },
-    "Your hardest time: %@": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Tu momento más difícil: %@"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Seu momento mais difícil: %@"
           }
         }
       }
@@ -3392,22 +2756,6 @@
         }
       }
     },
-    "of 5:00": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "de 5:00"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "de 5:00"
-          }
-        }
-      }
-    },
     "time back": {
       "localizations": {
         "es": {
@@ -3423,25 +2771,6 @@
           }
         }
       }
-    },
-    "— one of your reasons": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "— uno de tus motivos"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "— um dos seus motivos"
-          }
-        }
-      }
-    },
-    "“%@”": {
-      "shouldTranslate": false
     }
   },
   "version": "1.0"

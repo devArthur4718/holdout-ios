@@ -68,25 +68,3 @@ enum Trophies {
         }
     }
 }
-
-/// A row of the streak history.
-struct StreakRow: Equatable {
-    let streak: Streak
-    /// The longest streak, marked once there are two or more. A tie goes to the most recent.
-    let isBest: Bool
-}
-
-enum StreakHistory {
-    /// Past streaks shorter than this (e.g. two slips logged in a row) are left out.
-    static let minimumPastSeconds = 60
-
-    /// Newest first, so the current streak is on top. The current streak is always kept.
-    static func rows(_ streaks: [Streak]) -> [StreakRow] {
-        let newestFirst = streaks.reversed().filter { $0.isCurrent || $0.seconds >= minimumPastSeconds }
-        let best = newestFirst.count > 1 ? newestFirst.indices.max { a, b in
-            // On equal length the lower index (the newer streak) counts as larger, so it wins.
-            newestFirst[a].seconds < newestFirst[b].seconds || (newestFirst[a].seconds == newestFirst[b].seconds && a > b)
-        } : nil
-        return newestFirst.enumerated().map { StreakRow(streak: $1, isBest: $0 == best) }
-    }
-}

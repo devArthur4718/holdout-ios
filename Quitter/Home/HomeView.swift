@@ -11,7 +11,7 @@ struct HomeView: View {
                     let progress = HabitProgress(habit: habit, now: context.date, personalGoals: viewModel.personalGoals)
                     VStack(spacing: 12) {
                         HabitChips(viewModel: viewModel)
-                        CounterCard(habit: habit, progress: progress, actions: viewModel.actions, onUrge: viewModel.urgeTapped, onLogSlip: viewModel.logSlipTapped)
+                        CounterCard(habit: habit, progress: progress, actions: viewModel.actions, onLogSlip: viewModel.logSlipTapped)
                         StatTiles(progress: progress)
                         NextTrophyCard(progress: progress, action: { viewModel.actions.openDetail(habit.id) })
                         if Features.checkIn {
@@ -43,9 +43,6 @@ struct HomeView: View {
             }
         }
         .onAppear(perform: viewModel.reload)
-        .fullScreenCover(item: Binding(get: { viewModel.urge }, set: { viewModel.urge = $0 })) { urge in
-            UrgeView(viewModel: urge, onClose: { viewModel.urge = nil })
-        }
         .sheet(item: Binding(get: { viewModel.slipSheetHabit }, set: { viewModel.slipSheetHabit = $0 })) { habit in
             LogSlipSheet(
                 kind: habit.kind,
@@ -112,7 +109,6 @@ private struct CounterCard: View {
     let habit: Habit
     let progress: HabitProgress
     let actions: HomeViewModel.Actions
-    let onUrge: () -> Void
     let onLogSlip: () -> Void
 
     var body: some View {
@@ -143,29 +139,17 @@ private struct CounterCard: View {
                 .font(.footnote)
                 .opacity(0.85)
 
-            FlowLayout(spacing: 8, lineSpacing: 8) {
-                Button(action: onUrge) {
-                    Label("I have an urge", systemImage: "bolt.fill")
-                        .font(.subheadline.weight(.medium))
-                        .padding(.horizontal, 6)
-                        .frame(minHeight: 30)
-                }
-                .buttonStyle(.borderedProminent)
-                .buttonBorderShape(.capsule)
-                .tint(Palette.primary)
-                .foregroundStyle(Palette.onPrimary)
-
-                Button(action: onLogSlip) {
-                    Text("Log slip")
-                        .font(.subheadline.weight(.medium))
-                        .padding(.horizontal, 6)
-                        .frame(minHeight: 30)
-                }
-                .buttonStyle(.borderedProminent)
-                .buttonBorderShape(.capsule)
-                .tint(Palette.background)
-                .foregroundStyle(Palette.primary)
+            // Opens the slip sheet, which asks before anything is reset.
+            Button(action: onLogSlip) {
+                Text("Reset Counter")
+                    .font(.subheadline.weight(.medium))
+                    .padding(.horizontal, 6)
+                    .frame(minHeight: 30)
             }
+            .buttonStyle(.borderedProminent)
+            .buttonBorderShape(.capsule)
+            .tint(Palette.background)
+            .foregroundStyle(Palette.primary)
             .padding(.top, 14)
         }
         .multilineTextAlignment(.center)

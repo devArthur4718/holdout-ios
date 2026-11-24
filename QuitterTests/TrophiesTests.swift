@@ -138,97 +138,6 @@ struct TrophyListTests {
     }
 }
 
-struct StreakHistoryTests {
-    let start = Date(timeIntervalSince1970: 1_795_000_000)
-
-    func streak(_ seconds: Int, current: Bool = false) -> Streak {
-        Streak(start: start, end: current ? nil : start.addingTimeInterval(Double(seconds)), seconds: seconds)
-    }
-
-    @Test func newestFirstWithTheLongestMarkedBest() {
-        let rows = StreakHistory.rows([streak(500), streak(900), streak(100, current: true)])
-        #expect(rows.map(\.streak.seconds) == [100, 900, 500])
-        #expect(rows.map(\.isBest) == [false, true, false])
-        #expect(rows.first?.streak.isCurrent == true)
-    }
-
-    @Test func aTieGoesToTheMostRecent() {
-        #expect(StreakHistory.rows([streak(500), streak(500, current: true)]).map(\.isBest) == [true, false])
-    }
-
-    @Test func aSingleStreakIsNotMarkedBest() {
-        #expect(StreakHistory.rows([streak(500, current: true)]).map(\.isBest) == [false])
-    }
-}
-
-struct HardestTimesTests {
-    func calendar(_ zone: String, _ locale: String) -> Calendar {
-        var c = Calendar(identifier: .gregorian)
-        c.timeZone = TimeZone(identifier: zone)!
-        c.locale = Locale(identifier: locale)
-        return c
-    }
-
-    func date(_ iso: String) -> Date { try! Date(iso, strategy: .iso8601) }
-
-    @Test(arguments: [(4, DayPart.night), (5, .morning), (11, .morning), (12, .afternoon), (16, .afternoon),
-                      (17, .evening), (21, .evening), (22, .night), (23, .night), (0, .night)])
-    func hoursFallInTheirPartOfTheDay(hour: Int, part: DayPart) {
-        #expect(DayPart(hour: hour) == part)
-    }
-
-    @Test func eventsAreCountedInLocalTimeAcrossADaylightSavingChange() {
-        // New York moved its clocks back on 2026-11-01. 23:30 local is 03:30 UTC before and 04:30 UTC after.
-        let ny = calendar("America/New_York", "en_US")
-        let times = HardestTimes(
-            slips: [date("2026-10-31T03:30:00Z"), date("2026-11-02T04:30:00Z")],
-            urges: [date("2026-11-02T22:00:00Z")], // 17:00 local
-            calendar: ny
-        )
-        #expect(times.byPart.map(\.count) == [EventCount(), EventCount(), EventCount(slips: 0, urges: 1), EventCount(slips: 2, urges: 0)])
-        #expect(times.hardest == .night)
-    }
-
-    @Test func fewerThanThreeEventsSayNothingYet() {
-        let times = HardestTimes(slips: [date("2026-11-02T18:00:00Z")], urges: [date("2026-11-02T19:00:00Z")], calendar: calendar("UTC", "en_US"))
-        #expect(times.hardest == nil)
-    }
-
-    @Test func aTieGoesToTheEarlierPartOfTheDay() {
-        let utc = calendar("UTC", "en_US")
-        let times = HardestTimes(
-            slips: [date("2026-11-02T08:00:00Z"), date("2026-11-02T18:00:00Z")],
-            urges: [date("2026-11-03T09:00:00Z"), date("2026-11-03T19:00:00Z")],
-            calendar: utc
-        )
-        #expect(times.hardest == .morning)
-    }
-
-    @Test func theWeekStartsAsTheLocaleSays() {
-        let us = HardestTimes(slips: [], urges: [], calendar: calendar("UTC", "en_US"))
-        let br = HardestTimes(slips: [], urges: [], calendar: calendar("UTC", "pt_BR"))
-        let es = HardestTimes(slips: [], urges: [], calendar: calendar("UTC", "es_ES"))
-        #expect(us.byWeekday.first?.weekday == 1)
-        #expect(us.byWeekday.first?.label == "Sun")
-        #expect(br.byWeekday.first?.weekday == 1)
-        #expect(es.byWeekday.first?.weekday == 2)
-        #expect(es.byWeekday.map(\.weekday) == [2, 3, 4, 5, 6, 7, 1])
-    }
-
-    @Test func aSlipOnAMondayCountsOnMonday() {
-        // 2026-11-23 is a Monday.
-        let times = HardestTimes(slips: [date("2026-11-23T10:00:00Z")], urges: [], calendar: calendar("UTC", "es_ES"))
-        #expect(times.byWeekday.first?.count == EventCount(slips: 1, urges: 0))
-    }
-
-    @Test func barsAreSpokenWithBothCounts() {
-        #expect(InsightsViewModel.spoken("Evening", EventCount(slips: 5, urges: 1), locale: Locale(identifier: "en_US"))
-            == "Evening: 5 slips, 1 urge")
-        #expect(InsightsViewModel.spoken("Noche", EventCount(slips: 1, urges: 2), locale: Locale(identifier: "es_ES"))
-            == "Noche: 1 recaída, 2 antojos")
-    }
-}
-
 /// A store whose personal-goal writes fail, for the error alert.
 @MainActor
 final class FailingGoalStore: HabitStore {
@@ -241,8 +150,6 @@ final class FailingGoalStore: HabitStore {
     func hasHabits() -> Bool { base.hasHabits() }
     func logSlip(habitId: UUID, at date: Date, trigger: SlipTrigger?) throws -> Habit? { try base.logSlip(habitId: habitId, at: date, trigger: trigger) }
     func slips(habitId: UUID) -> [Slip] { base.slips(habitId: habitId) }
-    func logUrge(habitId: UUID, startedAt: Date, endedAt: Date) throws { try base.logUrge(habitId: habitId, startedAt: startedAt, endedAt: endedAt) }
-    func countUrges(habitId: UUID, since date: Date) -> Int { base.countUrges(habitId: habitId, since: date) }
     func reasons(habitId: UUID) -> [Reason] { base.reasons(habitId: habitId) }
     func addReason(habitId: UUID, text: String, at date: Date) throws { try base.addReason(habitId: habitId, text: text, at: date) }
     func updateReason(id: UUID, text: String) throws { try base.updateReason(id: id, text: text) }
@@ -250,7 +157,6 @@ final class FailingGoalStore: HabitStore {
     func updateDetails(id: UUID, kind: HabitKind, name: String, costPerDay: Decimal?, minutesPerDay: Int?) throws {
         try base.updateDetails(id: id, kind: kind, name: name, costPerDay: costPerDay, minutesPerDay: minutesPerDay)
     }
-    func urgeStarts(habitId: UUID) -> [Date] { base.urgeStarts(habitId: habitId) }
     func personalGoals(habitId: UUID) -> [PersonalGoal] { base.personalGoals(habitId: habitId) }
     func addPersonalGoal(habitId: UUID, days: Int, name: String?, at date: Date) throws { throw Failure() }
     func updatePersonalGoal(id: UUID, days: Int, name: String?) throws { throw Failure() }
@@ -326,17 +232,6 @@ struct TrophiesViewModelTests {
         #expect(vm.personalGoals.map(\.days) == [45])
     }
 
-    @Test func trophiesAndInsightsShareThePickedHabit() throws {
-        let first = try addHabit("Cigarettes")
-        _ = try addHabit("Wine")
-        let selection = HabitSelection()
-        let trophies = TrophiesViewModel(store: store, selection: selection)
-        let insights = InsightsViewModel(store: store, selection: selection)
-        trophies.select(first)
-        insights.reload()
-        #expect(insights.selected?.id == first)
-    }
-
     @Test func goalsAreDeletedWithTheirHabitAndExported() throws {
         let id = try addHabit()
         try store.addPersonalGoal(habitId: id, days: 45, name: "Beach, \"trip\"", at: start)
@@ -344,25 +239,6 @@ struct TrophiesViewModelTests {
         #expect(store.exportCSV().contains("\"days: 45; name: Beach, \"\"trip\"\"\""))
         try store.delete(id: id)
         #expect(store.personalGoals(habitId: id).isEmpty)
-    }
-}
-
-@MainActor
-struct InsightsViewModelTests {
-    let store = SwiftDataHabitStore.inMemory()
-    let start = Date(timeIntervalSince1970: 1_795_000_000)
-
-    @Test func slipsAndUrgesFillTheBarsAndTheHistory() throws {
-        var utc = Calendar(identifier: .gregorian)
-        utc.timeZone = TimeZone(identifier: "UTC")!
-        let id = try store.add(HabitDraft(kind: .smoking, name: "Cigarettes", lastDoneAt: start, costPerDay: nil, minutesPerDay: nil))
-        _ = try store.logSlip(habitId: id, at: start.addingTimeInterval(2 * 86_400), trigger: nil)
-        try store.logUrge(habitId: id, startedAt: start.addingTimeInterval(3 * 86_400), endedAt: start.addingTimeInterval(3 * 86_400 + 300))
-        let vm = InsightsViewModel(store: store, calendar: utc)
-        #expect(vm.hardestTimes.byPart.map(\.count.total).reduce(0, +) == 2)
-        let rows = vm.streakRows(at: start.addingTimeInterval(5 * 86_400))
-        #expect(rows.map(\.streak.seconds) == [3 * 86_400, 2 * 86_400])
-        #expect(rows.map(\.isBest) == [true, false])
     }
 }
 
@@ -387,21 +263,6 @@ struct ReviewFixTests {
         #expect(streaks.last == Streak(start: at(300), end: nil, seconds: 700))
     }
 
-    @Test func pastStreaksUnderAMinuteAreLeftOutButTheCurrentOneStays() {
-        let streaks = [
-            Streak(start: at(0), end: at(30), seconds: 30),
-            Streak(start: at(30), end: at(50), seconds: 20),
-            Streak(start: at(50), end: nil, seconds: 10),
-        ]
-        let rows = StreakHistory.rows(streaks)
-        #expect(rows.map(\.streak.seconds) == [10])
-        #expect(rows.map(\.isBest) == [false]) // only one row left, so no Best and the "past streaks" line shows
-
-        let more = StreakHistory.rows([Streak(start: at(0), end: at(600), seconds: 600)] + streaks)
-        #expect(more.map(\.streak.seconds) == [10, 600])
-        #expect(more.map(\.isBest) == [false, true])
-    }
-
     @Test func aNameCutAtFortyCharactersLosesItsTrailingSpace() {
         let name = String(repeating: "a", count: 39) + " tail"
         #expect(PersonalGoal.cleanName(name) == String(repeating: "a", count: 39))
@@ -411,7 +272,7 @@ struct ReviewFixTests {
         let id = UUID()
         let when = Date(timeIntervalSince1970: 1_795_471_531.789) // 2026-11-23T22:05:31.789Z
         let habit = Habit(id: id, kind: .smoking, name: "Cigarettes", lastDoneAt: when, costPerDay: nil, minutesPerDay: nil)
-        let csv = buildExportCSV(habits: [habit], slips: [Slip(habitId: id, at: when, trigger: nil)], urges: [], reasons: [])
+        let csv = buildExportCSV(habits: [habit], slips: [Slip(habitId: id, at: when, trigger: nil)], reasons: [])
         let rows = csv.components(separatedBy: "\r\n")
         #expect(rows[1] == "habit,Cigarettes,smoking,2026-11-23T22:05:31Z,,")
         #expect(rows[2] == "slip,Cigarettes,,2026-11-23T22:05:31Z,,")

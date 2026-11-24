@@ -15,10 +15,6 @@ protocol HabitStore {
     func logSlip(habitId: UUID, at date: Date, trigger: SlipTrigger?) throws -> Habit?
     /// A habit's slips, oldest first.
     func slips(habitId: UUID) -> [Slip]
-    /// Records an urge the user rode out.
-    func logUrge(habitId: UUID, startedAt: Date, endedAt: Date) throws
-    /// How many urges the user rode out for this habit since `date`.
-    func countUrges(habitId: UUID, since date: Date) -> Int
     /// A habit's reasons, oldest first.
     func reasons(habitId: UUID) -> [Reason]
     func addReason(habitId: UUID, text: String, at date: Date) throws
@@ -26,14 +22,12 @@ protocol HabitStore {
     func deleteReason(id: UUID) throws
     /// Changes what can be edited after the start. When the user last did it can't change.
     func updateDetails(id: UUID, kind: HabitKind, name: String, costPerDay: Decimal?, minutesPerDay: Int?) throws
-    /// When each of a habit's urges started, oldest first.
-    func urgeStarts(habitId: UUID) -> [Date]
     /// A habit's personal goals, fewest days first.
     func personalGoals(habitId: UUID) -> [PersonalGoal]
     func addPersonalGoal(habitId: UUID, days: Int, name: String?, at date: Date) throws
     func updatePersonalGoal(id: UUID, days: Int, name: String?) throws
     func deletePersonalGoal(id: UUID) throws
-    /// Deletes the habit with its slips, urges, reasons and personal goals.
+    /// Deletes the habit with its slips, reasons and personal goals.
     func delete(id: UUID) throws
     /// Deletes everything the app has stored.
     func deleteAll() throws
@@ -91,16 +85,6 @@ final class SwiftDataHabitStore: HabitStore {
         return updated
     }
 
-    func logUrge(habitId: UUID, startedAt: Date, endedAt: Date) throws {
-        context.insert(UrgeRecord(habitId: habitId, startedAt: startedAt, endedAt: endedAt))
-        try context.save()
-    }
-
-    func countUrges(habitId: UUID, since date: Date) -> Int {
-        let descriptor = FetchDescriptor<UrgeRecord>(predicate: #Predicate { $0.habitId == habitId && $0.endedAt >= date })
-        return (try? context.fetchCount(descriptor)) ?? 0
-    }
-
     func reasons(habitId: UUID) -> [Reason] {
         let descriptor = FetchDescriptor<ReasonRecord>(
             predicate: #Predicate { $0.habitId == habitId },
@@ -140,14 +124,6 @@ final class SwiftDataHabitStore: HabitStore {
         record.minutesPerDay = minutesPerDay
         try context.save()
         habitsChanged()
-    }
-
-    func urgeStarts(habitId: UUID) -> [Date] {
-        let descriptor = FetchDescriptor<UrgeRecord>(
-            predicate: #Predicate { $0.habitId == habitId },
-            sortBy: [SortDescriptor(\.startedAt)]
-        )
-        return ((try? context.fetch(descriptor)) ?? []).map(\.startedAt)
     }
 
     func personalGoals(habitId: UUID) -> [PersonalGoal] {
@@ -196,7 +172,6 @@ final class SwiftDataHabitStore: HabitStore {
     func delete(id: UUID) throws {
         try context.delete(model: PersonalGoalRecord.self, where: #Predicate { $0.habitId == id })
         try context.delete(model: SlipRecord.self, where: #Predicate { $0.habitId == id })
-        try context.delete(model: UrgeRecord.self, where: #Predicate { $0.habitId == id })
         try context.delete(model: ReasonRecord.self, where: #Predicate { $0.habitId == id })
         try context.delete(model: HabitRecord.self, where: #Predicate { $0.id == id })
         try context.save()
@@ -206,7 +181,6 @@ final class SwiftDataHabitStore: HabitStore {
     func deleteAll() throws {
         try context.delete(model: PersonalGoalRecord.self)
         try context.delete(model: SlipRecord.self)
-        try context.delete(model: UrgeRecord.self)
         try context.delete(model: ReasonRecord.self)
         try context.delete(model: HabitRecord.self)
         try context.save()
@@ -214,14 +188,12 @@ final class SwiftDataHabitStore: HabitStore {
     }
 
     func exportCSV() -> String {
-        let urges = (try? context.fetch(FetchDescriptor<UrgeRecord>(sortBy: [SortDescriptor(\.startedAt)]))) ?? []
         let reasons = (try? context.fetch(FetchDescriptor<ReasonRecord>(sortBy: [SortDescriptor(\.createdAt)]))) ?? []
         let slips = (try? context.fetch(FetchDescriptor<SlipRecord>(sortBy: [SortDescriptor(\.at)]))) ?? []
         let goals = (try? context.fetch(FetchDescriptor<PersonalGoalRecord>(sortBy: [SortDescriptor(\.createdAt)]))) ?? []
         return buildExportCSV(
             habits: allHabits(),
             slips: slips.map(\.slip),
-            urges: urges.map { (habitId: $0.habitId, startedAt: $0.startedAt, endedAt: $0.endedAt) },
             reasons: reasons.map { (habitId: $0.habitId, createdAt: $0.createdAt, text: $0.text) },
             goals: goals.map(\.goal)
         )
@@ -261,11 +233,22 @@ enum SchemaV2: VersionedSchema {
     }
 }
 
+/// Drops urges: the urge timer was removed. Their rows are deleted with the table.
+enum SchemaV3: VersionedSchema {
+    static let versionIdentifier = Schema.Version(3, 0, 0)
+    static var models: [any PersistentModel.Type] {
+        [HabitRecord.self, SlipRecord.self, ReasonRecord.self, PersonalGoalRecord.self]
+    }
+}
+
 /// How an older database on the phone is brought up to the current schema.
 enum QuitterMigrationPlan: SchemaMigrationPlan {
-    static var schemas: [any VersionedSchema.Type] { [SchemaV1.self, SchemaV2.self] }
+    static var schemas: [any VersionedSchema.Type] { [SchemaV1.self, SchemaV2.self, SchemaV3.self] }
     static var stages: [MigrationStage] {
-        [.lightweight(fromVersion: SchemaV1.self, toVersion: SchemaV2.self)]
+        [
+            .lightweight(fromVersion: SchemaV1.self, toVersion: SchemaV2.self),
+            .lightweight(fromVersion: SchemaV2.self, toVersion: SchemaV3.self),
+        ]
     }
 }
 
@@ -273,7 +256,7 @@ extension ModelContainer {
     /// The app's database, opened through the migration plan. `inMemory` is for tests and previews:
     /// nothing is written to disk. `url` places it somewhere else, for tests.
     static func quitter(inMemory: Bool = false, url: URL? = nil) throws -> ModelContainer {
-        let schema = Schema(versionedSchema: SchemaV2.self)
+        let schema = Schema(versionedSchema: SchemaV3.self)
         let config = if let url {
             ModelConfiguration(schema: schema, url: url)
         } else {

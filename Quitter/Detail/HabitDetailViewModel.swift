@@ -25,7 +25,6 @@ final class HabitDetailViewModel {
     /// The first moment of the calendar month shown.
     private(set) var month: Date
     var slipSheetOpen = false
-    var urge: UrgeViewModel?
     var toast: String?
     var saveFailed = false
 
@@ -107,14 +106,7 @@ final class HabitDetailViewModel {
         save { try store.delete(id: habitId) }
     }
 
-    // MARK: Urge and slip
-
-    func urgeTapped() {
-        urge = UrgeViewModel(habitId: habitId, store: store, now: now) { [weak self] count in
-            self?.urge = nil
-            self?.toast = String(localized: "Urge logged and outlasted. That is \(count) this month.")
-        }
-    }
+    // MARK: Slip
 
     func confirmSlip(trigger: SlipTrigger?) {
         slipSheetOpen = false

@@ -89,11 +89,4 @@ struct HabitDetailTests {
         #expect(vm.habit?.trackingSince == date("2026-09-21T00:00:00Z"))
         #expect(vm.toast == "Counter reset. Longest streak of 58 days is kept.")
     }
-
-    @Test func urgeTimerShowsOneOfTheReasons() throws {
-        let vm = try makeVM()
-        vm.addReason("For my lungs")
-        vm.urgeTapped()
-        #expect(vm.urge?.reason == "For my lungs")
-    }
 }

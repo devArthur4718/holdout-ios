@@ -134,10 +134,4 @@ enum SpokenDuration {
         Duration.seconds(seconds).formatted(.units(allowed: [unit], width: .wide, zeroValueUnits: .show(length: 1)).locale(locale))
     }
 
-    /// "4 minutes 10 seconds left", for the urge timer.
-    static func timeLeft(_ seconds: Int, locale: Locale = .current) -> String {
-        let minutes = unit(seconds / 60 * 60, .minutes, locale: locale)
-        let rest = unit(seconds % 60, .seconds, locale: locale)
-        return String(localized: LocalizedStringResource("\(minutes) \(rest) left", locale: locale))
-    }
 }

@@ -15,8 +15,6 @@ final class HomeViewModel {
     var toast: String?
     /// Saving a slip failed; the view shows an alert.
     var slipFailed = false
-    /// The open urge timer, if any. Kept here so the timer isn't restarted when the view redraws.
-    var urge: UrgeViewModel?
 
     /// What the home links to. Set by whoever owns navigation.
     struct Actions {
@@ -50,14 +48,6 @@ final class HomeViewModel {
     func select(_ id: UUID) {
         selectedId = id
         reload()
-    }
-
-    func urgeTapped() {
-        guard let habit = selected else { return }
-        urge = UrgeViewModel(habitId: habit.id, store: store, now: now) { [weak self] count in
-            self?.urge = nil
-            self?.toast = String(localized: "Urge logged and outlasted. That is \(count) this month.")
-        }
     }
 
     func logSlipTapped() {

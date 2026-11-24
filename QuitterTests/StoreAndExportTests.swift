@@ -17,7 +17,7 @@ struct DatabaseMigrationTests {
         }
         let reopened = SwiftDataHabitStore(container: try .quitter(url: url))
         #expect(reopened.allHabits().map(\.name) == ["Vape"])
-        #expect(QuitterMigrationPlan.schemas.count == 2)
+        #expect(QuitterMigrationPlan.schemas.count == 3)
     }
 
     @Test func aVersionOneStoreIsMigratedAndTakesPersonalGoals() throws {
@@ -40,6 +40,37 @@ struct DatabaseMigrationTests {
         try store.addPersonalGoal(habitId: habit.id, days: 45, name: "Beach trip", at: .now)
         #expect(store.personalGoals(habitId: habit.id).map(\.days) == [45])
     }
+
+    @Test func aVersionTwoStoreWithUrgesIsMigratedAndKeepsEverythingElse() throws {
+        let folder = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+        try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
+        defer { try? FileManager.default.removeItem(at: folder) }
+        let url = folder.appendingPathComponent("quitter.store")
+        let start = Date(timeIntervalSince1970: 1_795_000_000)
+
+        // A database from before the urge timer was removed.
+        let habitId: UUID
+        do {
+            let v2 = Schema(versionedSchema: SchemaV2.self)
+            let container = try ModelContainer(for: v2, configurations: ModelConfiguration(schema: v2, url: url))
+            let context = container.mainContext
+            let habit = HabitRecord(draft: HabitDraft(kind: .smoking, name: "Cigarettes", lastDoneAt: start, costPerDay: 5, minutesPerDay: nil))
+            habitId = habit.id
+            context.insert(habit)
+            context.insert(SlipRecord(habitId: habitId, at: start.addingTimeInterval(-86_400), trigger: .stress))
+            context.insert(UrgeRecord(habitId: habitId, startedAt: start, endedAt: start.addingTimeInterval(300)))
+            context.insert(ReasonRecord(habitId: habitId, text: "For my lungs", createdAt: start))
+            context.insert(PersonalGoalRecord(habitId: habitId, days: 45, name: "Beach trip", createdAt: start))
+            try context.save()
+        }
+
+        let store = SwiftDataHabitStore(container: try .quitter(url: url))
+        #expect(store.allHabits().map(\.name) == ["Cigarettes"])
+        #expect(store.slips(habitId: habitId).map(\.trigger) == [.stress])
+        #expect(store.reasons(habitId: habitId).map(\.text) == ["For my lungs"])
+        #expect(store.personalGoals(habitId: habitId).map(\.name) == ["Beach trip"])
+        #expect(!store.exportCSV().contains("urge"))
+    }
 }
 
 struct ExportFileNameTests {
@@ -49,13 +80,5 @@ struct ExportFileNameTests {
         // 01:30 UTC on 24 November is still 23 November in São Paulo.
         let date = try Date("2026-11-24T01:30:00Z", strategy: .iso8601)
         #expect(exportFileName(on: date, calendar: saoPaulo) == "quitter-2026-11-23.csv")
-    }
-}
-
-struct UrgeTimeLeftTests {
-    @Test func readsMinutesAndSecondsLeftInEachLanguage() {
-        #expect(SpokenDuration.timeLeft(250, locale: Locale(identifier: "en_US")) == "4 minutes 10 seconds left")
-        #expect(SpokenDuration.timeLeft(250, locale: Locale(identifier: "pt_BR")) == "faltam 4 minutos e 10 segundos")
-        #expect(SpokenDuration.timeLeft(61, locale: Locale(identifier: "es_ES")) == "quedan 1 minuto y 1 segundo")
     }
 }

@@ -1,17 +1,16 @@
 import SwiftUI
 
-/// The app after onboarding: Today, Trophies and Insights.
+/// The app after onboarding: Today and Trophies.
 struct MainTabView: View {
     let store: HabitStore
     var onAllDeleted: () -> Void = {}
 
-    private enum Tab { case today, trophies, insights }
+    private enum Tab { case today, trophies }
 
     @State private var tab = Tab.today
     @State private var homePath: [Route] = []
     @State private var home: HomeViewModel?
     @State private var trophies: TrophiesViewModel?
-    @State private var insights: InsightsViewModel?
 
     var body: some View {
         TabView(selection: $tab) {
@@ -35,18 +34,11 @@ struct MainTabView: View {
             }
             .tabItem { Label("Trophies", systemImage: "trophy") }
             .tag(Tab.trophies)
-
-            NavigationStack {
-                if let insights { InsightsView(viewModel: insights, onAddHabit: addHabit) }
-            }
-            .tabItem { Label("Insights", systemImage: "chart.bar") }
-            .tag(Tab.insights)
         }
         .onAppear {
             guard home == nil else { return }
             let selection = HabitSelection()
             trophies = TrophiesViewModel(store: store, selection: selection)
-            insights = InsightsViewModel(store: store, selection: selection)
             home = HomeViewModel(store: store, actions: .init(
                 addHabit: { homePath.append(.newHabit) },
                 openDetail: { homePath.append(.habitDetail(habitId: $0)) },
@@ -55,7 +47,7 @@ struct MainTabView: View {
         }
     }
 
-    /// From an empty Trophies or Insights tab: back to Today, on the New habit form.
+    /// From an empty Trophies tab: back to Today, on the New habit form.
     private func addHabit() {
         tab = .today
         homePath = [.newHabit]
