@@ -17,7 +17,7 @@ struct WelcomeView: View {
                     .foregroundStyle(Palette.onSurface)
                     .accessibilityAddTraits(.isHeader)
 
-                Text("Quitter counts the time since you last did the thing — and turns it into money kept and hours back. No account. Your data stays on the device.")
+                Text("Quitter shows how long it's been since you last did it, the money you didn't spend and the time you got back. No account. Your data stays on the device.")
                     .font(.body)
                     .foregroundStyle(Palette.onSurfaceVariant)
 

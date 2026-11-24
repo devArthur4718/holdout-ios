@@ -38,9 +38,9 @@ final class SettingsViewModel {
         }
     }
 
-    /// Everything stored, ready to share or save as a file.
+    /// Everything stored, ready to share or save as a file. Built when shared, not on every redraw.
     func export() -> CSVExport {
-        CSVExport(text: store.exportCSV())
+        CSVExport { @MainActor in self.store.exportCSV() }
     }
 
     func deleteAll() {

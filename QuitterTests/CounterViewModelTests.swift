@@ -35,8 +35,25 @@ struct CounterViewModelTests {
         #expect(went)
     }
 
-    @Test(arguments: [(0, "00:00:00"), (3_665, "01:01:05"), (3 * 86_400 + 4 * 3_600 + 1, "3d 04:00:01")])
-    func formatsElapsedTime(seconds: Int, expected: String) {
-        #expect(CounterViewModel.format(seconds: seconds) == expected)
+    @Test func aHabitStartedJustNowSaysFromNowOn() throws {
+        let vm = CounterViewModel(habitId: try savedHabitId(), store: store, now: lastDone.addingTimeInterval(5))
+        #expect(vm.intro == .justStarted(firstGoalDays: 1))
+        #expect(String(localized: vm.intro.body) == "From now on every minute counts for something. Your first trophy is at 1 day.")
+    }
+
+    @Test func aHabitStartedInThePastNamesTheNextTrophy() throws {
+        let vm = CounterViewModel(habitId: try savedHabitId(), store: store, now: lastDone.addingTimeInterval(755 * 86_400))
+        #expect(vm.intro == .alreadyGoing(nextGoalDays: 1095))
+        #expect(String(localized: vm.intro.title) == "You're already on your way")
+        #expect(String(localized: vm.intro.body) == "The time since you stopped already counts. Your next trophy is at 3 years.")
+    }
+
+    @Test(arguments: [(0, CounterViewModel.Intro.justStarted(firstGoalDays: 1)),
+                      (59, .justStarted(firstGoalDays: 1)),
+                      (60, .alreadyGoing(nextGoalDays: 1)),
+                      (86_400, .alreadyGoing(nextGoalDays: 7)),
+                      (7 * 86_400, .alreadyGoing(nextGoalDays: 30))])
+    func introDependsOnWhenTheHabitStarted(seconds: Int, expected: CounterViewModel.Intro) {
+        #expect(CounterViewModel.Intro(elapsedSeconds: seconds) == expected)
     }
 }

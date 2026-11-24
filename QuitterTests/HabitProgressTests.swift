@@ -26,18 +26,31 @@ struct HabitProgressTests {
     @Test func firstTrophyIsOneDay() {
         let p = HabitProgress(habit: habit(), now: days(0.5))
         #expect(p.nextMilestoneDays == 1)
+        #expect(p.previousMilestoneDays == 0)
         #expect(p.secondsToNextMilestone == 43_200)
-        #expect(abs(p.milestoneFraction - 0.5) < 0.001)
+        #expect(abs(p.goalFraction - 0.5) < 0.0001)
     }
 
-    @Test func progressIsMeasuredBetweenMilestones() {
-        let p = HabitProgress(habit: habit(), now: days(10.5)) // between 7 and 14
-        #expect(p.nextMilestoneDays == 14)
-        #expect(abs(p.milestoneFraction - 0.5) < 0.001)
+    @Test func aPersonalGoalCanComeFirst() {
+        let beach = PersonalGoal(id: UUID(), habitId: UUID(), days: 45, name: "Beach trip", createdAt: start)
+        let p = HabitProgress(habit: habit(), now: days(31), personalGoals: [beach])
+        #expect(p.nextMilestoneDays == 45)
+        #expect(p.previousMilestoneDays == 30)
+        #expect(p.nextGoalLabel == "Beach trip")
+        #expect(abs(p.goalFraction - 31.0 / 45) < 0.0001)
     }
 
-    @Test func afterAYearATrophyLandsEveryYear() {
-        #expect(HabitProgress(habit: habit(), now: days(400)).nextMilestoneDays == 730)
+    @Test func progressFillsFromTheQuitMomentNotFromThePreviousGoal() {
+        let p = HabitProgress(habit: habit(), now: days(45)) // between 30 and 60
+        #expect(p.nextMilestoneDays == 60)
+        #expect(p.previousMilestoneDays == 30)
+        #expect(abs(p.goalFraction - 0.75) < 0.0001)
+    }
+
+    @Test func afterTwoYearsAGoalLandsEveryYear() {
+        let p = HabitProgress(habit: habit(), now: days(755))
+        #expect(p.nextMilestoneDays == 1095)
+        #expect(p.previousMilestoneDays == 730)
     }
 
     @Test func futureLastDoneCountsAsZero() {

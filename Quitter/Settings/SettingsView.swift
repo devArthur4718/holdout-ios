@@ -2,13 +2,18 @@ import CoreTransferable
 import SwiftUI
 import UniformTypeIdentifiers
 
-/// The exported data as a .csv file for the share sheet.
+/// The exported data as a dated .csv file for the share sheet. The CSV is only built when the user shares it.
 struct CSVExport: Transferable {
-    let text: String
+    let build: @MainActor @Sendable () -> String
 
     static var transferRepresentation: some TransferRepresentation {
-        DataRepresentation(exportedContentType: .commaSeparatedText) { Data($0.text.utf8) }
-            .suggestedFileName("quitter-export.csv")
+        FileRepresentation(exportedContentType: .commaSeparatedText) { export in
+            let text = await export.build()
+            let url = FileManager.default.temporaryDirectory
+                .appendingPathComponent(exportFileName(on: .now, calendar: .current))
+            try Data(text.utf8).write(to: url, options: .atomic)
+            return SentTransferredFile(url)
+        }
     }
 }
 
@@ -71,7 +76,7 @@ struct SettingsView: View {
                 Label {
                     VStack(alignment: .leading, spacing: 2) {
                         Text("Stays on this phone")
-                        Text("No account, no ads, no tracking. Nothing you enter is sent to us. Your iPhone's own backup may include it.")
+                        Text("No account, no ads, no tracking. Nothing you enter is sent to us. Your phone's own backup may include it.")
                             .font(.footnote)
                             .foregroundStyle(Palette.onSurfaceVariant)
                     }

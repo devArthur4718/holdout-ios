@@ -8,7 +8,7 @@ struct HomeView: View {
             if let habit = viewModel.selected {
                 // Everything below depends on the time, so redraw it every second.
                 TimelineView(.periodic(from: habit.lastDoneAt, by: 1)) { context in
-                    let progress = HabitProgress(habit: habit, now: context.date)
+                    let progress = HabitProgress(habit: habit, now: context.date, personalGoals: viewModel.personalGoals)
                     VStack(spacing: 12) {
                         HabitChips(viewModel: viewModel)
                         CounterCard(habit: habit, progress: progress, actions: viewModel.actions, onUrge: viewModel.urgeTapped, onLogSlip: viewModel.logSlipTapped)
@@ -24,7 +24,7 @@ struct HomeView: View {
             } else {
                 // Every habit was deleted.
                 ContentUnavailableView {
-                    Label("No habits yet", systemImage: "leaf")
+                    Text("No habits yet")
                 } description: {
                     Text("Add the habit you want to quit and your counter starts.")
                 } actions: {
@@ -96,6 +96,8 @@ private struct HabitChips: View {
                         .foregroundStyle(Palette.onSurfaceVariant)
                         .frame(width: 32, height: 32)
                         .overlay { RoundedRectangle(cornerRadius: 8).strokeBorder(Palette.outline) }
+                        // A 44 pt touch target around the small chip.
+                        .frame(width: 44, height: 44)
                         .contentShape(.rect)
                 }
                 .buttonStyle(.plain)
@@ -113,9 +115,6 @@ private struct CounterCard: View {
     let onUrge: () -> Void
     let onLogSlip: () -> Void
 
-    @ScaledMetric(relativeTo: .largeTitle) private var daysSize: CGFloat = 56
-    @ScaledMetric(relativeTo: .title) private var clockSize: CGFloat = 30
-
     var body: some View {
         VStack(spacing: 6) {
             Text(habit.kind.freeFor)
@@ -124,7 +123,15 @@ private struct CounterCard: View {
                 .tracking(0.6)
                 .accessibilityAddTraits(.isHeader)
 
-            elapsed
+            ProgressArc(
+                elapsedSeconds: progress.elapsedSeconds,
+                personalGoals: progress.personalGoals,
+                size: .compact,
+                trackColor: Palette.onPrimaryContainer.opacity(0.12),
+                contentColor: Palette.onPrimaryContainer,
+                secondaryColor: Palette.onPrimaryContainer.opacity(0.85)
+            )
+            .padding(.vertical, 6)
 
             Group {
                 if progress.isPersonalBest || progress.bestSeconds < HomeViewModel.notableStreak {
@@ -168,20 +175,6 @@ private struct CounterCard: View {
         .background(Palette.primaryContainer, in: .rect(cornerRadius: 28))
     }
 
-    /// "18d 06h 42m 10s", with the days large. Read aloud as "18 days, 6 hours, 42 minutes".
-    private var elapsed: some View {
-        let t = progress.elapsedSeconds
-        let unit = Font.body
-        let number = Font.system(size: clockSize, design: .monospaced)
-        let d = Text("\(t / 86_400)").font(.system(size: daysSize, weight: .medium, design: .monospaced)).tracking(-2)
-        let h = Text(String(format: "%02d", t / 3_600 % 24)).font(number)
-        let m = Text(String(format: "%02d", t / 60 % 60)).font(number)
-        let s = Text(String(format: "%02d", t % 60)).font(number)
-        return Text("\(d)\(Text("d").font(unit))  \(h)\(Text("h").font(unit))  \(m)\(Text("m").font(unit))  \(s)\(Text("s").font(unit))")
-            .accessibilityLabel(
-                Duration.seconds(t).formatted(.units(allowed: [.days, .hours, .minutes], width: .wide))
-            )
-    }
 }
 
 private struct StatTiles: View {
@@ -243,18 +236,6 @@ private struct NextTrophyCard: View {
                         timeToGo
                     }
                 }
-                Capsule()
-                    .fill(Palette.outlineVariant)
-                    .frame(height: 8)
-                    .overlay(alignment: .leading) {
-                        GeometryReader { geo in
-                            // A sliver stays visible even right after a milestone, so the bar never looks empty.
-                            Capsule()
-                                .fill(Palette.primary)
-                                .frame(width: geo.size.width * max(0.04, progress.milestoneFraction))
-                        }
-                    }
-                    .accessibilityHidden(true)
             }
             .padding(16)
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -266,21 +247,26 @@ private struct NextTrophyCard: View {
     }
 
     private var title: some View {
-        Text("Next trophy — ^[\(progress.nextMilestoneDays) day](inflect: true)")
+        Text("Next trophy — \(progress.nextGoalLabel)")
             .font(.subheadline.weight(.medium))
             .foregroundStyle(Palette.onSurface)
     }
 
     private var timeToGo: some View {
-        let s = progress.secondsToNextMilestone
-        let text: Text = if s >= 86_400 {
-            Text("^[\((s + 86_399) / 86_400) day](inflect: true) to go")
-        } else if s >= 3_600 {
-            Text("^[\((s + 3_599) / 3_600) hour](inflect: true) to go")
-        } else {
-            Text("^[\(max(1, (s + 59) / 60)) minute](inflect: true) to go")
-        }
-        return text.font(.caption).foregroundStyle(Palette.onSurfaceVariant)
+        timeToGoText(progress.secondsToNextMilestone)
+            .font(.caption)
+            .foregroundStyle(Palette.onSurfaceVariant)
+    }
+}
+
+/// "12 days to go", "5 hours to go" or "3 minutes to go", rounded up.
+func timeToGoText(_ s: Int) -> Text {
+    if s >= 86_400 {
+        Text("^[\((s + 86_399) / 86_400) day](inflect: true) to go")
+    } else if s >= 3_600 {
+        Text("^[\((s + 3_599) / 3_600) hour](inflect: true) to go")
+    } else {
+        Text("^[\(max(1, (s + 59) / 60)) minute](inflect: true) to go")
     }
 }
 

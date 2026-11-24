@@ -1,15 +1,20 @@
 import SwiftUI
 
-/// The app after onboarding: Habits, Rewards, Trophies and Insights.
+/// The app after onboarding: Today, Trophies and Insights.
 struct MainTabView: View {
     let store: HabitStore
     var onAllDeleted: () -> Void = {}
 
+    private enum Tab { case today, trophies, insights }
+
+    @State private var tab = Tab.today
     @State private var homePath: [Route] = []
     @State private var home: HomeViewModel?
+    @State private var trophies: TrophiesViewModel?
+    @State private var insights: InsightsViewModel?
 
     var body: some View {
-        TabView {
+        TabView(selection: $tab) {
             NavigationStack(path: $homePath) {
                 Group {
                     if let home { HomeView(viewModel: home) }
@@ -22,25 +27,37 @@ struct MainTabView: View {
                     }, onAllDeleted: onAllDeleted)
                 }
             }
-            .tabItem { Label("Habits", systemImage: "checkmark.circle") }
+            .tabItem { Label("Today", systemImage: "checkmark.circle") }
+            .tag(Tab.today)
 
-            placeholderTab("Rewards", title: "Rewards", symbol: "gift")
-            placeholderTab("Trophies", title: "Trophy room", symbol: "trophy")
-            placeholderTab("Insights", title: "Insights", symbol: "chart.line.uptrend.xyaxis")
+            NavigationStack {
+                if let trophies { TrophiesView(viewModel: trophies, onAddHabit: addHabit) }
+            }
+            .tabItem { Label("Trophies", systemImage: "trophy") }
+            .tag(Tab.trophies)
+
+            NavigationStack {
+                if let insights { InsightsView(viewModel: insights, onAddHabit: addHabit) }
+            }
+            .tabItem { Label("Insights", systemImage: "chart.bar") }
+            .tag(Tab.insights)
         }
         .onAppear {
             guard home == nil else { return }
+            let selection = HabitSelection()
+            trophies = TrophiesViewModel(store: store, selection: selection)
+            insights = InsightsViewModel(store: store, selection: selection)
             home = HomeViewModel(store: store, actions: .init(
                 addHabit: { homePath.append(.newHabit) },
                 openDetail: { homePath.append(.habitDetail(habitId: $0)) },
-                checkIn: { homePath.append(.comingSoon("Evening check-in")) },
                 settings: { homePath.append(.settings) }
             ))
         }
     }
 
-    private func placeholderTab(_ label: LocalizedStringKey, title: LocalizedStringKey, symbol: String) -> some View {
-        NavigationStack { PlaceholderView(title: title) }
-            .tabItem { Label(label, systemImage: symbol) }
+    /// From an empty Trophies or Insights tab: back to Today, on the New habit form.
+    private func addHabit() {
+        tab = .today
+        homePath = [.newHabit]
     }
 }

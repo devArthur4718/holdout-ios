@@ -26,7 +26,14 @@ protocol HabitStore {
     func deleteReason(id: UUID) throws
     /// Changes what can be edited after the start. When the user last did it can't change.
     func updateDetails(id: UUID, kind: HabitKind, name: String, costPerDay: Decimal?, minutesPerDay: Int?) throws
-    /// Deletes the habit with its slips, urges and reasons.
+    /// When each of a habit's urges started, oldest first.
+    func urgeStarts(habitId: UUID) -> [Date]
+    /// A habit's personal goals, fewest days first.
+    func personalGoals(habitId: UUID) -> [PersonalGoal]
+    func addPersonalGoal(habitId: UUID, days: Int, name: String?, at date: Date) throws
+    func updatePersonalGoal(id: UUID, days: Int, name: String?) throws
+    func deletePersonalGoal(id: UUID) throws
+    /// Deletes the habit with its slips, urges, reasons and personal goals.
     func delete(id: UUID) throws
     /// Deletes everything the app has stored.
     func deleteAll() throws
@@ -135,7 +142,59 @@ final class SwiftDataHabitStore: HabitStore {
         habitsChanged()
     }
 
+    func urgeStarts(habitId: UUID) -> [Date] {
+        let descriptor = FetchDescriptor<UrgeRecord>(
+            predicate: #Predicate { $0.habitId == habitId },
+            sortBy: [SortDescriptor(\.startedAt)]
+        )
+        return ((try? context.fetch(descriptor)) ?? []).map(\.startedAt)
+    }
+
+    func personalGoals(habitId: UUID) -> [PersonalGoal] {
+        let descriptor = FetchDescriptor<PersonalGoalRecord>(
+            predicate: #Predicate { $0.habitId == habitId },
+            sortBy: [SortDescriptor(\.days)]
+        )
+        return ((try? context.fetch(descriptor)) ?? []).map(\.goal)
+    }
+
+    func addPersonalGoal(habitId: UUID, days: Int, name: String?, at date: Date) throws {
+        context.insert(PersonalGoalRecord(habitId: habitId, days: days, name: name, createdAt: date))
+        try saveGoals()
+    }
+
+    func updatePersonalGoal(id: UUID, days: Int, name: String?) throws {
+        guard let record = goalRecord(id: id) else { return }
+        record.days = days
+        record.name = name
+        try saveGoals()
+    }
+
+    func deletePersonalGoal(id: UUID) throws {
+        guard let record = goalRecord(id: id) else { return }
+        context.delete(record)
+        try saveGoals()
+    }
+
+    private func goalRecord(id: UUID) -> PersonalGoalRecord? {
+        var descriptor = FetchDescriptor<PersonalGoalRecord>(predicate: #Predicate { $0.id == id })
+        descriptor.fetchLimit = 1
+        return (try? context.fetch(descriptor))?.first
+    }
+
+    /// Personal goals change the trophy notifications, so they are re-planned.
+    private func saveGoals() throws {
+        do {
+            try context.save()
+            habitsChanged()
+        } catch {
+            context.rollback()
+            throw error
+        }
+    }
+
     func delete(id: UUID) throws {
+        try context.delete(model: PersonalGoalRecord.self, where: #Predicate { $0.habitId == id })
         try context.delete(model: SlipRecord.self, where: #Predicate { $0.habitId == id })
         try context.delete(model: UrgeRecord.self, where: #Predicate { $0.habitId == id })
         try context.delete(model: ReasonRecord.self, where: #Predicate { $0.habitId == id })
@@ -145,6 +204,7 @@ final class SwiftDataHabitStore: HabitStore {
     }
 
     func deleteAll() throws {
+        try context.delete(model: PersonalGoalRecord.self)
         try context.delete(model: SlipRecord.self)
         try context.delete(model: UrgeRecord.self)
         try context.delete(model: ReasonRecord.self)
@@ -157,11 +217,13 @@ final class SwiftDataHabitStore: HabitStore {
         let urges = (try? context.fetch(FetchDescriptor<UrgeRecord>(sortBy: [SortDescriptor(\.startedAt)]))) ?? []
         let reasons = (try? context.fetch(FetchDescriptor<ReasonRecord>(sortBy: [SortDescriptor(\.createdAt)]))) ?? []
         let slips = (try? context.fetch(FetchDescriptor<SlipRecord>(sortBy: [SortDescriptor(\.at)]))) ?? []
+        let goals = (try? context.fetch(FetchDescriptor<PersonalGoalRecord>(sortBy: [SortDescriptor(\.createdAt)]))) ?? []
         return buildExportCSV(
             habits: allHabits(),
             slips: slips.map(\.slip),
             urges: urges.map { (habitId: $0.habitId, startedAt: $0.startedAt, endedAt: $0.endedAt) },
-            reasons: reasons.map { (habitId: $0.habitId, createdAt: $0.createdAt, text: $0.text) }
+            reasons: reasons.map { (habitId: $0.habitId, createdAt: $0.createdAt, text: $0.text) },
+            goals: goals.map(\.goal)
         )
     }
 
@@ -183,21 +245,48 @@ final class SwiftDataHabitStore: HabitStore {
     }
 }
 
+/// The database layout as first shipped.
+enum SchemaV1: VersionedSchema {
+    static let versionIdentifier = Schema.Version(1, 0, 0)
+    static var models: [any PersistentModel.Type] {
+        [HabitRecord.self, SlipRecord.self, UrgeRecord.self, ReasonRecord.self]
+    }
+}
+
+/// Adds personal goals. The other models are unchanged.
+enum SchemaV2: VersionedSchema {
+    static let versionIdentifier = Schema.Version(2, 0, 0)
+    static var models: [any PersistentModel.Type] {
+        [HabitRecord.self, SlipRecord.self, UrgeRecord.self, ReasonRecord.self, PersonalGoalRecord.self]
+    }
+}
+
+/// How an older database on the phone is brought up to the current schema.
+enum QuitterMigrationPlan: SchemaMigrationPlan {
+    static var schemas: [any VersionedSchema.Type] { [SchemaV1.self, SchemaV2.self] }
+    static var stages: [MigrationStage] {
+        [.lightweight(fromVersion: SchemaV1.self, toVersion: SchemaV2.self)]
+    }
+}
+
 extension ModelContainer {
-    /// The app's database. `inMemory` is for tests and previews: nothing is written to disk.
-    static func quitter(inMemory: Bool = false) -> ModelContainer {
-        let config = ModelConfiguration(isStoredInMemoryOnly: inMemory)
-        do {
-            return try ModelContainer(for: HabitRecord.self, SlipRecord.self, UrgeRecord.self, ReasonRecord.self, configurations: config)
-        } catch {
-            fatalError("Could not open the habit database: \(error)")
+    /// The app's database, opened through the migration plan. `inMemory` is for tests and previews:
+    /// nothing is written to disk. `url` places it somewhere else, for tests.
+    static func quitter(inMemory: Bool = false, url: URL? = nil) throws -> ModelContainer {
+        let schema = Schema(versionedSchema: SchemaV2.self)
+        let config = if let url {
+            ModelConfiguration(schema: schema, url: url)
+        } else {
+            ModelConfiguration(schema: schema, isStoredInMemoryOnly: inMemory)
         }
+        return try ModelContainer(for: schema, migrationPlan: QuitterMigrationPlan.self, configurations: config)
     }
 }
 
 extension SwiftDataHabitStore {
     /// A throwaway store for previews and tests.
     static func inMemory() -> SwiftDataHabitStore {
-        SwiftDataHabitStore(container: .quitter(inMemory: true))
+        // An in-memory database can't fail to open the way a file on disk can.
+        SwiftDataHabitStore(container: try! .quitter(inMemory: true))
     }
 }

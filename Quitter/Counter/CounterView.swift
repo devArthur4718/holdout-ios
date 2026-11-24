@@ -1,52 +1,45 @@
 import SwiftUI
 
 struct CounterView: View {
-    let viewModel: CounterViewModel
+    /// Kept in state, so a rebuilt navigation destination can't re-decide the intro text.
+    @State private var viewModel: CounterViewModel
+
+    init(viewModel: CounterViewModel) {
+        _viewModel = State(initialValue: viewModel)
+    }
+
+    /// The visible height, so short content can be centred and the button pushed to the bottom.
+    @State private var viewportHeight: CGFloat = 0
     @Environment(\.openURL) private var openURL
     @Environment(\.scenePhase) private var scenePhase
-
-    @ScaledMetric(relativeTo: .largeTitle) private var tileSize: CGFloat = 112
-    @ScaledMetric(relativeTo: .largeTitle) private var tileIconSize: CGFloat = 52
-    @ScaledMetric(relativeTo: .largeTitle) private var clockSize: CGFloat = 44
 
     var body: some View {
         ScrollView {
             VStack(spacing: 8) {
-                Image(systemName: "timer")
-                    .font(.system(size: tileIconSize, weight: .medium))
-                    .foregroundStyle(Palette.onPrimaryContainer)
-                    .frame(width: tileSize, height: tileSize)
-                    .background(Palette.primaryContainer, in: .circle)
-                    .padding(.bottom, 8)
-                    .accessibilityHidden(true)
+                // Centres the content when it fits, scrolls when it doesn't (large text).
+                Spacer(minLength: 0)
 
-                Text("Your counter is running")
+                Text(viewModel.intro.title)
                     .font(.title)
                     .foregroundStyle(Palette.onSurface)
                     .accessibilityAddTraits(.isHeader)
 
-                Text("From now on every minute counts for something. The first trophy lands at 24 hours.")
+                Text(viewModel.intro.body)
                     .font(.body)
                     .foregroundStyle(Palette.onSurfaceVariant)
-                    .frame(maxWidth: 300)
+                    .frame(maxWidth: 280)
 
-                clock.padding(.top, 18)
+                arc.padding(.top, 18)
 
                 Text(viewModel.habit?.name ?? "")
                     .font(.subheadline)
                     .foregroundStyle(Palette.onSurfaceVariant)
 
                 notifications.padding(.top, 16)
-            }
-            .multilineTextAlignment(.center)
-            .padding(.horizontal, 24)
-            .frame(maxWidth: .infinity)
-            // Centres the content when it fits, scrolls when it doesn't (large text).
-            .containerRelativeFrame(.vertical) { height, _ in height }
-        }
-        .scrollBounceBehavior(.basedOnSize)
-        .safeAreaInset(edge: .bottom) {
-            VStack(spacing: 8) {
+
+                Spacer(minLength: 0)
+
+                // Scrolls with the content, as on Android, rather than being pinned to the bottom.
                 Button(action: viewModel.goToHabitsTapped) {
                     Text("Go to my habits")
                         .font(.headline)
@@ -56,18 +49,21 @@ struct CounterView: View {
                 .buttonBorderShape(.roundedRectangle(radius: Radius.button))
                 .tint(Palette.primary)
                 .foregroundStyle(Palette.onPrimary)
+                .padding(.top, 28)
 
                 if Features.ads {
                     Text("Quitter is free and ad-supported. Ads never appear during urge or slip flows.")
                         .font(.caption2)
                         .foregroundStyle(Palette.outline)
-                        .multilineTextAlignment(.center)
                 }
             }
-            .padding(.horizontal, 16)
-            .padding(.vertical, 12)
-            .background(Palette.background)
+            .multilineTextAlignment(.center)
+            .padding(.horizontal, 24)
+            .padding(.vertical, 20)
+            .frame(maxWidth: .infinity, minHeight: viewportHeight)
         }
+        .scrollBounceBehavior(.basedOnSize)
+        .onGeometryChange(for: CGFloat.self, of: { $0.size.height }) { viewportHeight = $0 }
         .background(Palette.background.ignoresSafeArea())
         .toolbar(.hidden, for: .navigationBar)
         .task(id: scenePhase) { await viewModel.refreshNotifications() }
@@ -97,16 +93,10 @@ struct CounterView: View {
         }
     }
 
-    private var clock: some View {
+    private var arc: some View {
         // Ticks on the same fraction of a second as the start, so seconds never skip.
         TimelineView(.periodic(from: viewModel.habit?.lastDoneAt ?? .now, by: 1)) { context in
-            let seconds = viewModel.elapsedSeconds(at: context.date)
-            Text(CounterViewModel.format(seconds: seconds))
-                .font(.system(size: clockSize, weight: .medium, design: .monospaced))
-                .foregroundStyle(Palette.primary)
-                .minimumScaleFactor(0.5)
-                .lineLimit(1)
-                .accessibilityLabel(Duration.seconds(seconds).formatted(.units(allowed: [.days, .hours, .minutes, .seconds], width: .wide)))
+            ProgressArc(elapsedSeconds: viewModel.elapsedSeconds(at: context.date), size: .large)
                 .accessibilityIdentifier("elapsed")
         }
     }

@@ -106,7 +106,7 @@ struct UrgeView: View {
         .padding(.vertical, 18)
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("Time left")
-        .accessibilityValue(Duration.seconds(remaining).formatted(.units(allowed: [.minutes, .seconds], width: .wide)))
+        .accessibilityValue(SpokenDuration.timeLeft(remaining))
         .accessibilityIdentifier("urgeTimer")
     }
 }

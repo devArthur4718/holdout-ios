@@ -79,7 +79,7 @@ struct HabitDetailView: View {
     }
 
     private func content(habit: Habit, now: Date) -> some View {
-        let progress = HabitProgress(habit: habit, now: now)
+        let progress = HabitProgress(habit: habit, now: now, personalGoals: viewModel.personalGoals)
         return ScrollView {
             VStack(alignment: .leading, spacing: 12) {
                 VStack(alignment: .leading, spacing: 2) {
@@ -91,7 +91,8 @@ struct HabitDetailView: View {
                         .font(.subheadline)
                         .foregroundStyle(Palette.onSurfaceVariant)
                 }
-                ElapsedText(seconds: progress.elapsedSeconds)
+                ProgressArc(elapsedSeconds: progress.elapsedSeconds, personalGoals: progress.personalGoals, size: .large)
+                    .padding(.vertical, 4)
 
                 Picker("Section", selection: $viewModel.tab) {
                     ForEach(DetailTab.allCases) { tab in
@@ -134,26 +135,6 @@ struct HabitDetailView: View {
         .padding(.horizontal, 16)
         .padding(.vertical, 8)
         .background(Palette.background)
-    }
-}
-
-/// "18d 06h 42m 10s" in the primary color, read aloud as "18 days, 6 hours, 42 minutes".
-private struct ElapsedText: View {
-    let seconds: Int
-    @ScaledMetric(relativeTo: .largeTitle) private var daysSize: CGFloat = 46
-    @ScaledMetric(relativeTo: .title) private var partSize: CGFloat = 26
-
-    var body: some View {
-        let t = seconds
-        let unit = Font.subheadline
-        let number = Font.system(size: partSize, design: .monospaced)
-        let d = Text("\(t / 86_400)").font(.system(size: daysSize, weight: .medium, design: .monospaced)).tracking(-2)
-        let h = Text(String(format: "%02d", t / 3_600 % 24)).font(number)
-        let m = Text(String(format: "%02d", t / 60 % 60)).font(number)
-        let s = Text(String(format: "%02d", t % 60)).font(number)
-        return Text("\(d)\(Text("d").font(unit))  \(h)\(Text("h").font(unit))  \(m)\(Text("m").font(unit))  \(s)\(Text("s").font(unit))")
-            .foregroundStyle(Palette.primary)
-            .accessibilityLabel(Duration.seconds(t).formatted(.units(allowed: [.days, .hours, .minutes], width: .wide)))
     }
 }
 

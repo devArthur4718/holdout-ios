@@ -48,7 +48,7 @@ final class MilestoneNotifier: MilestoneNotifying {
         self.center = center
         self.defaults = defaults
         observer = NotificationCenter.default.addObserver(forName: .habitsChanged, object: nil, queue: .main) { [weak self] _ in
-            MainActor.assumeIsolated { self?.reschedule() }
+            MainActor.assumeIsolated { _ = self?.reschedule() }
         }
     }
 
@@ -89,7 +89,9 @@ final class MilestoneNotifier: MilestoneNotifying {
             await previous?.value
             center.removeAllPendingNotificationRequests()
             guard await isOn() else { return }
-            for request in Self.requests(habits: store.allHabits(), now: .now, calendar: .current) {
+            let habits = store.allHabits()
+            let goals = Dictionary(uniqueKeysWithValues: habits.map { ($0.id, store.personalGoals(habitId: $0.id)) })
+            for request in Self.requests(habits: habits, now: .now, calendar: .current, personalGoals: goals) {
                 try? await center.add(request)
             }
         }
@@ -98,36 +100,47 @@ final class MilestoneNotifier: MilestoneNotifying {
     }
 
     /// The nearest trophies across all habits, up to iOS's limit.
-    nonisolated static func requests(habits: [Habit], now: Date, calendar: Calendar) -> [UNNotificationRequest] {
+    nonisolated static func requests(
+        habits: [Habit], now: Date, calendar: Calendar, personalGoals: [UUID: [PersonalGoal]] = [:]
+    ) -> [UNNotificationRequest] {
         guard !habits.isEmpty else { return [] }
         let perHabit = max(1, min(8, limit / habits.count))
         let planned = habits
-            .flatMap { habit in habit.milestoneAlerts(now: now, calendar: calendar, count: perHabit).map { (habit, $0) } }
+            .flatMap { habit in
+                habit.milestoneAlerts(now: now, calendar: calendar, count: perHabit, personal: personalGoals[habit.id] ?? [])
+                    .map { (habit, $0) }
+            }
             .sorted { $0.1.at < $1.1.at }
             .prefix(limit)
         return planned.map { habit, alert in
             let content = UNMutableNotificationContent()
-            content.title = title(kind: habit.kind, days: alert.days)
-            content.body = String(localized: "Another trophy for \(habit.name). Keep going.")
+            let goal = Goals.label(days: alert.days, personal: personalGoals[habit.id] ?? [])
+            content.title = title(kind: habit.kind, goal: goal)
+            content.body = body(name: habit.name, goal: goal)
             content.sound = .default
             let trigger = UNTimeIntervalNotificationTrigger(timeInterval: max(1, alert.at.timeIntervalSince(now)), repeats: false)
             return UNNotificationRequest(identifier: "milestone-\(habit.id)-\(alert.days)", content: content, trigger: trigger)
         }
     }
 
-    /// "Smoke-free for 7 days", or "… for 2 years" on an anniversary.
-    nonisolated static func title(kind: HabitKind, days: Int) -> String {
-        let formatter = DateComponentsFormatter()
-        formatter.unitsStyle = .full
-        let length: DateComponents
-        if HabitProgress.isWholeYears(days) {
-            formatter.allowedUnits = [.year]
-            length = DateComponents(year: days / 365)
-        } else {
-            formatter.allowedUnits = [.day]
-            length = DateComponents(day: days)
-        }
-        return "\(String(localized: kind.freeFor)) \(formatter.string(from: length) ?? "")"
+    /// "Smoke-free for 1 week", "… for 6 months", "… for 2 years" or "… for Beach trip".
+    nonisolated static func title(kind: HabitKind, goal: String, locale: Locale = .current) -> String {
+        var freeFor = kind.freeFor
+        freeFor.locale = locale
+        return "\(String(localized: freeFor)) \(goal)"
+    }
+
+    nonisolated static func title(kind: HabitKind, days: Int, locale: Locale = .current) -> String {
+        title(kind: kind, goal: Goals.label(days: days, locale: locale), locale: locale)
+    }
+
+    /// "Cigarettes: you made it to 1 week. Another trophy — keep going."
+    nonisolated static func body(name: String, goal: String, locale: Locale = .current) -> String {
+        String(localized: LocalizedStringResource("\(name): you made it to \(goal). Another trophy — keep going.", locale: locale))
+    }
+
+    nonisolated static func body(name: String, days: Int, locale: Locale = .current) -> String {
+        body(name: name, goal: Goals.label(days: days, locale: locale), locale: locale)
     }
 }
 

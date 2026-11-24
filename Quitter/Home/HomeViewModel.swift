@@ -5,6 +5,8 @@ import Observation
 @Observable
 final class HomeViewModel {
     private(set) var habits: [Habit] = []
+    /// The selected habit's personal goals, part of its trophy ladder.
+    private(set) var personalGoals: [PersonalGoal] = []
     /// The habit the user picked; nil means "the newest one".
     private(set) var selectedId: UUID?
     /// The habit whose "Log a slip" sheet is open.
@@ -42,10 +44,12 @@ final class HomeViewModel {
     /// Reads habits again, e.g. after one was added.
     func reload() {
         habits = store.allHabits()
+        personalGoals = selected.map { store.personalGoals(habitId: $0.id) } ?? []
     }
 
     func select(_ id: UUID) {
         selectedId = id
+        reload()
     }
 
     func urgeTapped() {

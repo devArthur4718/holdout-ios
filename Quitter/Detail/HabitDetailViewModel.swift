@@ -20,6 +20,7 @@ final class HabitDetailViewModel {
     private(set) var habit: Habit?
     private(set) var slips: [Slip] = []
     private(set) var reasons: [Reason] = []
+    private(set) var personalGoals: [PersonalGoal] = []
     var tab: DetailTab = .stats
     /// The first moment of the calendar month shown.
     private(set) var month: Date
@@ -46,6 +47,7 @@ final class HabitDetailViewModel {
         habit = store.habit(id: habitId)
         slips = store.slips(habitId: habitId)
         reasons = store.reasons(habitId: habitId)
+        personalGoals = store.personalGoals(habitId: habitId)
     }
 
     // MARK: Calendar

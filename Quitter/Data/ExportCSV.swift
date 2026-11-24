@@ -1,12 +1,13 @@
 import Foundation
 
-/// One CSV with a row per habit, slip, urge and reason, so it opens in any spreadsheet.
+/// One CSV with a row per habit, slip, urge, reason and personal goal, so it opens in any spreadsheet.
 /// Times are UTC in ISO 8601, e.g. 2026-11-18T21:30:00Z.
 func buildExportCSV(
     habits: [Habit],
     slips: [Slip],
     urges: [(habitId: UUID, startedAt: Date, endedAt: Date)],
-    reasons: [(habitId: UUID, createdAt: Date, text: String)]
+    reasons: [(habitId: UUID, createdAt: Date, text: String)],
+    goals: [PersonalGoal] = []
 ) -> String {
     let names = Dictionary(habits.map { ($0.id, $0.name) }, uniquingKeysWith: { first, _ in first })
     let time = { (date: Date) in date.formatted(.iso8601) }
@@ -27,7 +28,17 @@ func buildExportCSV(
     for reason in reasons {
         rows.append(["reason", names[reason.habitId] ?? "", "", time(reason.createdAt), "", reason.text])
     }
+    for goal in goals {
+        let detail = ["days: \(goal.days)", goal.name.map { "name: \($0)" }].compactMap { $0 }.joined(separator: "; ")
+        rows.append(["goal", names[goal.habitId] ?? "", "", time(goal.createdAt), "", detail])
+    }
     return rows.map { $0.map(csvField).joined(separator: ",") }.joined(separator: "\r\n") + "\r\n"
+}
+
+/// "quitter-2026-11-23.csv", dated with the local calendar day.
+func exportFileName(on date: Date, calendar: Calendar) -> String {
+    let day = calendar.dateComponents([.year, .month, .day], from: date)
+    return String(format: "quitter-%04d-%02d-%02d.csv", day.year ?? 0, day.month ?? 0, day.day ?? 0)
 }
 
 /// Quotes a field when it holds a comma, quote or line break, doubling any quotes inside.

@@ -26,24 +26,20 @@ enum QuietHours {
 
 extension HabitProgress {
     /// The first trophy after this many seconds of streak.
-    static func nextMilestoneDays(afterSeconds elapsed: Int) -> Int {
-        let days = elapsed / 86_400
-        return milestoneDays.first { $0 > days } ?? (days / 365 + 1) * 365
+    static func nextMilestoneDays(afterSeconds elapsed: Int, personal: [PersonalGoal] = []) -> Int {
+        Goals.current(elapsedSeconds: elapsed, personal: personal)
     }
-
-    /// True when the duration is a whole number of years, so it reads better as years.
-    static func isWholeYears(_ days: Int) -> Bool { days >= 365 && days % 365 == 0 }
 }
 
 extension Habit {
-    /// The next `count` trophy notifications for the current streak, all after `now`.
-    func milestoneAlerts(now: Date, calendar: Calendar, count: Int) -> [MilestoneAlert] {
+    /// The next `count` trophy notifications for the current streak, all after `now`, personal goals included.
+    func milestoneAlerts(now: Date, calendar: Calendar, count: Int, personal: [PersonalGoal] = []) -> [MilestoneAlert] {
         // A milestone reached at night is still due at 08:00, so start looking far enough back to catch it.
         let quietSeconds = (24 - QuietHours.startHour + QuietHours.endHour) * 3_600
         var elapsed = max(0, Int(now.timeIntervalSince(lastDoneAt)) - quietSeconds)
         var alerts: [MilestoneAlert] = []
         while alerts.count < count {
-            let days = HabitProgress.nextMilestoneDays(afterSeconds: elapsed)
+            let days = HabitProgress.nextMilestoneDays(afterSeconds: elapsed, personal: personal)
             let at = QuietHours.shift(lastDoneAt.addingTimeInterval(TimeInterval(days * 86_400)), calendar: calendar)
             if at > now { alerts.append(MilestoneAlert(days: days, at: at)) }
             elapsed = days * 86_400

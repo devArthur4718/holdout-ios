@@ -90,3 +90,25 @@ final class SlipRecord {
         Slip(habitId: habitId, at: at, trigger: trigger.flatMap(SlipTrigger.init(rawValue:)))
     }
 }
+
+/// A personal goal (trophy) for one habit. Added in SchemaV2.
+@Model
+final class PersonalGoalRecord {
+    @Attribute(.unique) var id: UUID
+    var habitId: UUID
+    var days: Int
+    var name: String?
+    var createdAt: Date
+
+    init(habitId: UUID, days: Int, name: String?, createdAt: Date) {
+        id = UUID()
+        self.habitId = habitId
+        self.days = days
+        self.name = name
+        self.createdAt = createdAt
+    }
+
+    var goal: PersonalGoal {
+        PersonalGoal(id: id, habitId: habitId, days: days, name: name, createdAt: createdAt)
+    }
+}

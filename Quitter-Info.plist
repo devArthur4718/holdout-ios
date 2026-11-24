@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<!-- The launch screen: brand purple in light and dark mode, as on Android, with the white mark centred.
+	     Everything else in Info.plist is generated from the INFOPLIST_KEY_ build settings. -->
+	<key>UILaunchScreen</key>
+	<dict>
+		<key>UIColorName</key>
+		<string>LaunchBackground</string>
+		<key>UIImageName</key>
+		<string>LaunchMarkWhite</string>
+	</dict>
+</dict>
+</plist>

@@ -78,7 +78,7 @@ struct NewHabitView: View {
                 .accessibilityElement(children: .contain)
             } footer: {
                 if viewModel.minutesTooHigh {
-                    Text("A day only has 1,440 minutes.").foregroundStyle(.red)
+                    Text("A day only has \(ArcText.grouped(1_440, locale: .current)) minutes.").foregroundStyle(.red)
                 } else if let projection {
                     Label { projection } icon: {
                         Image(systemName: "lightbulb").foregroundStyle(Palette.primary)

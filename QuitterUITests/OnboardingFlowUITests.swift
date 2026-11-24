@@ -30,14 +30,18 @@ final class OnboardingFlowUITests: XCTestCase {
         // The counter reads the saved habit back.
         XCTAssertTrue(app.staticTexts["Your counter is running"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["Online poker"].exists)
-        XCTAssertTrue(app.staticTexts["elapsed"].exists)
+        XCTAssertTrue(app.staticTexts["From now on every minute counts for something. Your first trophy is at 1 day."].exists)
+        let arc = app.descendants(matching: .any)["elapsed"]
+        XCTAssertTrue(arc.exists)
+        XCTAssertTrue(arc.label.hasSuffix("of the way to 1 day."))
 
         app.buttons["Go to my habits"].tap()
         XCTAssertTrue(app.navigationBars["Today"].waitForExistence(timeout: 5))
         XCTAssertFalse(app.buttons["Add my first habit"].exists)
         XCTAssertTrue(app.staticTexts["BET-FREE FOR"].exists)
+        XCTAssertTrue(app.buttons.matching(NSPredicate(format: "label BEGINSWITH %@", "Next trophy — 1 day")).firstMatch.exists)
         XCTAssertTrue(app.buttons["Online poker"].exists) // its chip
-        XCTAssertTrue(app.tabBars.buttons["Habits"].exists)
+        XCTAssertTrue(app.tabBars.buttons["Today"].exists)
 
         // Logging a slip asks first, then restarts the counter.
         app.buttons["Log slip"].tap()
@@ -102,6 +106,9 @@ final class OnboardingFlowUITests: XCTestCase {
         let name = app.textFields["name"]
         name.coordinate(withNormalizedOffset: CGVector(dx: 0.98, dy: 0.5)).tap()
         name.typeText(String(repeating: XCUIKeyboardKey.delete.rawValue, count: 12) + "Rolling tobacco")
+        // With the software keyboard up, Save sits under it; close the keyboard first.
+        let done = app.toolbars.buttons["Done"]
+        if done.exists { done.tap() }
         app.buttons["Save"].tap()
         XCTAssertTrue(app.staticTexts["Rolling tobacco"].waitForExistence(timeout: 5))
 

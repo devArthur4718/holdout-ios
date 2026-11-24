@@ -1,6 +1,22 @@
 {
   "sourceLanguage": "en",
   "strings": {
+    "%@ %@ left": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "quedan %1$@ y %2$@"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "faltam %1$@ e %2$@"
+          }
+        }
+      }
+    },
     "%@ / day": {
       "localizations": {
         "es": {
@@ -17,8 +33,104 @@
         }
       }
     },
-    "%@%@  %@%@  %@%@  %@%@": {
+    "%@ and %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ y %2$@"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ e %2$@"
+          }
+        }
+      }
+    },
+    "%@ of the way to %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ del camino hacia %2$@"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@ do caminho até %2$@"
+          }
+        }
+      }
+    },
+    "%@, %@ and %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@, %2$@ y %3$@"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@, %2$@ e %3$@"
+          }
+        }
+      }
+    },
+    "%@, earned %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@, conseguido el %2$@"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@, conquistado em %2$@"
+          }
+        }
+      }
+    },
+    "%@, not earned yet": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, aún no conseguido"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@, ainda não conquistado"
+          }
+        }
+      }
+    },
+    "%@: %@, %@": {
       "shouldTranslate": false
+    },
+    "%@: you made it to %@. Another trophy — keep going.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@: cumpliste %2$@. Otro trofeo — sigue así."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$@: você completou %2$@. Mais um troféu — continue assim."
+          }
+        }
+      }
     },
     "%lld": {
       "shouldTranslate": false
@@ -26,7 +138,68 @@
     "%lld / %lld": {
       "shouldTranslate": false
     },
+    "%lld days": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld day"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld days"
+                }
+              }
+            }
+          }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld día"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld días"
+                }
+              }
+            }
+          }
+        },
+        "pt-BR": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld dia"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld dias"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "%lld h": {
+      "shouldTranslate": false
+    },
+    "%lld h %lld min": {
       "shouldTranslate": false
     },
     "%lld min / day": {
@@ -45,24 +218,288 @@
         }
       }
     },
+    "%lld months": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld month"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld months"
+                }
+              }
+            }
+          }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld mes"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld meses"
+                }
+              }
+            }
+          }
+        },
+        "pt-BR": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld mês"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld meses"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld slips": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld slip"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld slips"
+                }
+              }
+            }
+          }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld recaída"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld recaídas"
+                }
+              }
+            }
+          }
+        },
+        "pt-BR": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld recaída"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld recaídas"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld urges": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld urge"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld urges"
+                }
+              }
+            }
+          }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld antojo"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld antojos"
+                }
+              }
+            }
+          }
+        },
+        "pt-BR": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld vontade"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld vontades"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "%lld years": {
+      "localizations": {
+        "en": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld year"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld years"
+                }
+              }
+            }
+          }
+        },
+        "es": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld año"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld años"
+                }
+              }
+            }
+          }
+        },
+        "pt-BR": {
+          "variations": {
+            "plural": {
+              "one": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld ano"
+                }
+              },
+              "other": {
+                "stringUnit": {
+                  "state": "translated",
+                  "value": "%lld anos"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "0": {
       "shouldTranslate": false
     },
     "0.00": {
       "shouldTranslate": false
     },
-    "A day only has 1,440 minutes.": {
+    "1 week": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Un día solo tiene 1440 minutos."
+            "value": "1 semana"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Um dia tem só 1.440 minutos."
+            "value": "1 semana"
+          }
+        }
+      }
+    },
+    "1½ years": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 año y medio"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "1 ano e meio"
+          }
+        }
+      }
+    },
+    "A day only has %@ minutes.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un día solo tiene %@ minutos."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um dia tem só %@ minutos."
           }
         }
       }
@@ -79,6 +516,54 @@
           "stringUnit": {
             "state": "translated",
             "value": "Um minuto, uma vez por dia"
+          }
+        }
+      }
+    },
+    "A trophy at every goal: 1 day, 1 week, 30 days, 6 months, 1 year…": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Un trofeo en cada meta: 1 día, 1 semana, 30 días, 6 meses, 1 año…"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um troféu a cada meta: 1 dia, 1 semana, 30 dias, 6 meses, 1 ano…"
+          }
+        }
+      }
+    },
+    "Add a habit to see when it's hardest and how your streaks add up.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agrega un hábito para ver cuándo es más difícil y cómo se suman tus rachas."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicione um hábito para ver quando é mais difícil e como suas sequências se somam."
+          }
+        }
+      }
+    },
+    "Add a habit to start earning trophies.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agrega un hábito para empezar a ganar trofeos."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicione um hábito para começar a ganhar troféus."
           }
         }
       }
@@ -131,6 +616,22 @@
         }
       }
     },
+    "Add personal goal": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Agregar meta personal"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Adicionar meta pessoal"
+          }
+        }
+      }
+    },
     "Add the habit you want to quit and your counter starts.": {
       "localizations": {
         "es": {
@@ -143,6 +644,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Adicione o hábito que você quer largar e o contador começa."
+          }
+        }
+      }
+    },
+    "Afternoon": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tarde"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tarde"
           }
         }
       }
@@ -184,13 +701,29 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Todos los hábitos, recaídas, antojos y motivos se borrarán de este iPhone. No se puede deshacer. Exporta antes si quieres una copia."
+            "value": "Todos los hábitos, recaídas, antojos y motivos se borrarán de este teléfono. No se puede deshacer. Exporta antes si quieres una copia."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Todos os hábitos, recaídas, vontades e motivos serão apagados deste iPhone. Não dá para desfazer. Exporte antes se quiser uma cópia."
+            "value": "Todos os hábitos, recaídas, vontades e motivos serão apagados deste celular. Não dá para desfazer. Exporte antes se quiser uma cópia."
+          }
+        }
+      }
+    },
+    "All trophies": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todos los trofeos"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todos os troféus"
           }
         }
       }
@@ -207,22 +740,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Quase lá. Repare como já está passando."
-          }
-        }
-      }
-    },
-    "Another trophy for %@. Keep going.": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Un trofeo más para %@. Sigue así."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Mais um troféu para %@. Continue assim."
           }
         }
       }
@@ -271,6 +788,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nesse ritmo, em um ano você terá guardado **%@**."
+          }
+        }
+      }
+    },
+    "Best": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mejor"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Melhor"
           }
         }
       }
@@ -403,22 +936,6 @@
         }
       }
     },
-    "Coming soon": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Próximamente"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Em breve"
-          }
-        }
-      }
-    },
     "Cost / day": {
       "localizations": {
         "es": {
@@ -431,22 +948,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Custo / dia"
-          }
-        }
-      }
-    },
-    "Cost and time you'd normally spend become live savings": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "El dinero y el tiempo que solías gastar se vuelven ahorro en vivo"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "O custo e o tempo que você gastaria viram economia ao vivo"
           }
         }
       }
@@ -479,6 +980,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Não foi possível registrar a recaída"
+          }
+        }
+      }
+    },
+    "Couldn't open your data": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "No se pudieron abrir tus datos"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Não foi possível abrir seus dados"
           }
         }
       }
@@ -563,6 +1080,54 @@
         }
       }
     },
+    "Current": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Actual"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Atual"
+          }
+        }
+      }
+    },
+    "Day of the week": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Día de la semana"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dia da semana"
+          }
+        }
+      }
+    },
+    "Days": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Días"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Dias"
+          }
+        }
+      }
+    },
     "Delete": {
       "localizations": {
         "es": {
@@ -643,6 +1208,22 @@
         }
       }
     },
+    "Delete goal": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eliminar meta"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apagar meta"
+          }
+        }
+      }
+    },
     "Delete habit": {
       "localizations": {
         "es": {
@@ -671,6 +1252,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Apagar motivo"
+          }
+        }
+      }
+    },
+    "Delete this goal?": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "¿Eliminar esta meta?"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Apagar esta meta?"
           }
         }
       }
@@ -707,6 +1304,22 @@
         }
       }
     },
+    "Edit personal goal": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Editar meta personal"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Editar meta pessoal"
+          }
+        }
+      }
+    },
     "Edit reason": {
       "localizations": {
         "es": {
@@ -719,6 +1332,38 @@
           "stringUnit": {
             "state": "translated",
             "value": "Editar motivo"
+          }
+        }
+      }
+    },
+    "Enter a number of days from 1 to %@.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Escribe un número de días del 1 al %@."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Digite um número de dias de 1 a %@."
+          }
+        }
+      }
+    },
+    "Evening": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noche"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Noite"
           }
         }
       }
@@ -819,18 +1464,18 @@
         }
       }
     },
-    "From now on every minute counts for something. The first trophy lands at 24 hours.": {
+    "From now on every minute counts for something. Your first trophy is at %@.": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Desde ahora, cada minuto cuenta. El primer trofeo llega a las 24 horas."
+            "value": "Desde ahora, cada minuto cuenta. Tu primer trofeo llega al cumplir %@."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "A partir de agora, cada minuto conta. O primeiro troféu chega em 24 horas."
+            "value": "A partir de agora, cada minuto conta. Seu primeiro troféu chega ao completar %@."
           }
         }
       }
@@ -879,22 +1524,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Ir para meus hábitos"
-          }
-        }
-      }
-    },
-    "Habits": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hábitos"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Hábitos"
           }
         }
       }
@@ -1059,6 +1688,22 @@
         }
       }
     },
+    "Morning": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mañana"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Manhã"
+          }
+        }
+      }
+    },
     "Name": {
       "localizations": {
         "es": {
@@ -1071,6 +1716,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Nome"
+          }
+        }
+      }
+    },
+    "Name (optional)": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nombre (opcional)"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nome (opcional)"
           }
         }
       }
@@ -1091,6 +1752,38 @@
         }
       }
     },
+    "New personal goal": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nueva meta personal"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Nova meta pessoal"
+          }
+        }
+      }
+    },
+    "Next": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Siguiente"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Próximo"
+          }
+        }
+      }
+    },
     "Next month": {
       "localizations": {
         "es": {
@@ -1107,58 +1800,50 @@
         }
       }
     },
-    "Next trophy — ^[%lld day](inflect: true)": {
+    "Next trophy — %@": {
       "localizations": {
         "es": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Próximo trofeo — %lld día"
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Próximo trofeo — %lld días"
-                }
-              }
-            }
+          "stringUnit": {
+            "state": "translated",
+            "value": "Próximo trofeo — %@"
           }
         },
         "pt-BR": {
-          "variations": {
-            "plural": {
-              "one": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Próximo troféu — %lld dia"
-                }
-              },
-              "other": {
-                "stringUnit": {
-                  "state": "translated",
-                  "value": "Próximo troféu — %lld dias"
-                }
-              }
-            }
+          "stringUnit": {
+            "state": "translated",
+            "value": "Próximo troféu — %@"
           }
         }
       }
     },
-    "No account, no ads, no tracking. Nothing you enter is sent to us. Your iPhone's own backup may include it.": {
+    "Night": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sin cuenta, sin anuncios, sin rastreo. Nada de lo que escribes se nos envía. La copia de seguridad de tu iPhone puede incluirlo."
+            "value": "Madrugada"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sem conta, sem anúncios, sem rastreamento. Nada do que você digita é enviado para nós. O backup do seu iPhone pode incluir esses dados."
+            "value": "Madrugada"
+          }
+        }
+      }
+    },
+    "No account, no ads, no tracking. Nothing you enter is sent to us. Your phone's own backup may include it.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sin cuenta, sin anuncios, sin rastreo. Nada de lo que escribes se nos envía. La copia de seguridad de tu teléfono puede incluirlo."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sem conta, sem anúncios, sem rastreamento. Nada do que você digita é enviado para nós. O backup do seu celular pode incluir esses dados."
           }
         }
       }
@@ -1207,6 +1892,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sem motivo"
+          }
+        }
+      }
+    },
+    "Not enough data yet — this fills in as you log slips and urges.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Todavía no hay suficientes datos — esto se completa a medida que registras recaídas y antojos."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ainda não há dados suficientes — isto se preenche conforme você registra recaídas e vontades."
           }
         }
       }
@@ -1276,7 +1977,20 @@
       }
     },
     "OK": {
-      "shouldTranslate": false
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aceptar"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "OK"
+          }
+        }
+      }
     },
     "One at each milestone, never at night": {
       "localizations": {
@@ -1326,6 +2040,22 @@
         }
       }
     },
+    "Past streaks show up here after a slip.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Las rachas anteriores aparecen aquí después de una recaída."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sequências anteriores aparecem aqui depois de uma recaída."
+          }
+        }
+      }
+    },
     "Personal best — you are on it": {
       "localizations": {
         "es": {
@@ -1354,6 +2084,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Recorde pessoal: %@"
+          }
+        }
+      }
+    },
+    "Personal goal: %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meta personal: %@"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Meta pessoal: %@"
           }
         }
       }
@@ -1406,22 +2152,6 @@
         }
       }
     },
-    "Quitter counts the time since you last did the thing — and turns it into money kept and hours back. No account. Your data stays on the device.": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Quitter cuenta el tiempo desde la última vez que lo hiciste — y lo convierte en dinero ahorrado y horas recuperadas. Sin cuenta. Tus datos se quedan en el dispositivo."
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "O Quitter conta o tempo desde a última vez que você fez aquilo — e transforma isso em dinheiro guardado e horas de volta. Sem conta. Seus dados ficam no aparelho."
-          }
-        }
-      }
-    },
     "Quitter export": {
       "localizations": {
         "es": {
@@ -1454,6 +2184,22 @@
         }
       }
     },
+    "Quitter shows how long it's been since you last did it, the money you didn't spend and the time you got back. No account. Your data stays on the device.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quitter muestra cuánto tiempo llevas sin hacerlo, el dinero que no gastaste y el tiempo que recuperaste. Sin cuenta. Tus datos se quedan en el dispositivo."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O Quitter mostra há quanto tempo você não faz isso, o dinheiro que deixou de gastar e o tempo que ganhou de volta. Sem conta. Seus dados ficam no aparelho."
+          }
+        }
+      }
+    },
     "Reasons": {
       "localizations": {
         "es": {
@@ -1482,22 +2228,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Zerar contador"
-          }
-        }
-      }
-    },
-    "Rewards": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Premios"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Recompensas"
           }
         }
       }
@@ -1582,6 +2312,22 @@
         }
       }
     },
+    "See the money and time you didn't spend add up, live": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mira cómo se suman, en vivo, el dinero y el tiempo que no gastaste"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Veja o dinheiro e o tempo que você deixou de gastar se somando, ao vivo"
+          }
+        }
+      }
+    },
     "Settings": {
       "localizations": {
         "es": {
@@ -1598,6 +2344,22 @@
         }
       }
     },
+    "Since %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desde el %@"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Desde %@"
+          }
+        }
+      }
+    },
     "Slip": {
       "localizations": {
         "es": {
@@ -1610,6 +2372,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Recaída"
+          }
+        }
+      }
+    },
+    "Slips": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recaídas"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recaídas"
           }
         }
       }
@@ -1678,6 +2456,22 @@
         }
       }
     },
+    "Something went wrong while opening your habits. Nothing was deleted.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Algo salió mal al abrir tus hábitos. No se borró nada."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Algo deu errado ao abrir seus hábitos. Nada foi apagado."
+          }
+        }
+      }
+    },
     "Start the counter": {
       "localizations": {
         "es": {
@@ -1715,13 +2509,29 @@
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Se queda en este iPhone"
+            "value": "Se queda en este teléfono"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Fica neste iPhone"
+            "value": "Fica neste celular"
+          }
+        }
+      }
+    },
+    "Streak history": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Historial de rachas"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Histórico de sequências"
           }
         }
       }
@@ -1770,6 +2580,38 @@
           "stringUnit": {
             "state": "translated",
             "value": "Sem açúcar há"
+          }
+        }
+      }
+    },
+    "The time since you stopped already counts. Your next trophy is at %@.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "El tiempo desde que lo dejaste ya cuenta. Tu próximo trofeo llega al cumplir %@."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "O tempo desde que você parou já conta. Seu próximo troféu chega ao completar %@."
+          }
+        }
+      }
+    },
+    "There's already a trophy at %@.": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ya hay un trofeo en %@."
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Já existe um troféu em %@."
           }
         }
       }
@@ -1854,6 +2696,22 @@
         }
       }
     },
+    "Time of day": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Momento del día"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Hora do dia"
+          }
+        }
+      }
+    },
     "Today": {
       "localizations": {
         "es": {
@@ -1902,22 +2760,6 @@
         }
       }
     },
-    "Trophies at every hour and day milestone": {
-      "localizations": {
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Trofeos en cada hito de horas y días"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Troféus a cada marco de horas e dias"
-          }
-        }
-      }
-    },
     "Trophy notifications": {
       "localizations": {
         "es": {
@@ -1934,18 +2776,18 @@
         }
       }
     },
-    "Trophy room": {
+    "Try again": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sala de trofeos"
+            "value": "Intentar de nuevo"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Sala de troféus"
+            "value": "Tentar de novo"
           }
         }
       }
@@ -2018,6 +2860,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Timer da vontade"
+          }
+        }
+      }
+    },
+    "Urges": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Antojos"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Vontades"
           }
         }
       }
@@ -2102,6 +2960,22 @@
         }
       }
     },
+    "When it's hardest": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Cuándo es más difícil"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Quando é mais difícil"
+          }
+        }
+      }
+    },
     "Why are you quitting? Write it in your own words. You will see it when an urge hits.": {
       "localizations": {
         "es": {
@@ -2130,6 +3004,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Você vai receber uma notificação a cada troféu."
+          }
+        }
+      }
+    },
+    "You're already on your way": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ya vas en camino"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Você já está a caminho"
           }
         }
       }
@@ -2178,6 +3068,22 @@
           "stringUnit": {
             "state": "translated",
             "value": "Seus dados"
+          }
+        }
+      }
+    },
+    "Your hardest time: %@": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tu momento más difícil: %@"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Seu momento mais difícil: %@"
           }
         }
       }
@@ -2342,8 +3248,69 @@
         }
       }
     },
-    "d": {
-      "shouldTranslate": false
+    "day": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "día"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "dia"
+          }
+        }
+      }
+    },
+    "days": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "días"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "dias"
+          }
+        }
+      }
+    },
+    "e.g. 45": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "p. ej., 45"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ex.: 45"
+          }
+        }
+      }
+    },
+    "e.g. Beach trip": {
+      "localizations": {
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "p. ej., Viaje a la playa"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "ex.: Viagem à praia"
+          }
+        }
+      }
     },
     "e.g. I want to keep up with my kids": {
       "localizations": {
@@ -2360,12 +3327,6 @@
           }
         }
       }
-    },
-    "h": {
-      "shouldTranslate": false
-    },
-    "m": {
-      "shouldTranslate": false
     },
     "min": {
       "localizations": {
@@ -2446,9 +3407,6 @@
           }
         }
       }
-    },
-    "s": {
-      "shouldTranslate": false
     },
     "time back": {
       "localizations": {

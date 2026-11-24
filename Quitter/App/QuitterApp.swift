@@ -5,27 +5,78 @@ import UserNotifications
 @main
 struct QuitterApp: App {
     /// UI tests launch with `-uiTesting` to start from an empty, throwaway database.
-    private let container = ModelContainer.quitter(
-        inMemory: ProcessInfo.processInfo.arguments.contains("-uiTesting")
-    )
+    private static let inMemory = ProcessInfo.processInfo.arguments.contains("-uiTesting")
 
-    private let store: SwiftDataHabitStore
-    private let milestones: MilestoneNotifier
+    /// nil when the database couldn't be opened; the app then offers to try again instead of crashing.
+    @State private var services = AppServices.open(inMemory: Self.inMemory)
     private let foregroundNotifications = ForegroundNotifications()
 
     init() {
-        store = SwiftDataHabitStore(container: container)
-        milestones = MilestoneNotifier(store: store)
         UNUserNotificationCenter.current().delegate = foregroundNotifications
     }
 
     var body: some Scene {
         WindowGroup {
-            RootView(store: store)
-                .environment(\.milestones, milestones)
-                .onScenePhaseActive { milestones.reschedule() }
+            if let services {
+                RootView(store: services.store)
+                    .environment(\.milestones, services.milestones)
+                    .onScenePhaseActive { services.milestones.reschedule() }
+                    .modelContainer(services.container)
+            } else {
+                DatabaseErrorView { services = AppServices.open(inMemory: Self.inMemory) }
+            }
         }
-        .modelContainer(container)
+    }
+}
+
+/// The database and what's built on it, created together once it opens.
+@MainActor
+final class AppServices {
+    let container: ModelContainer
+    let store: SwiftDataHabitStore
+    let milestones: MilestoneNotifier
+
+    private init(container: ModelContainer) {
+        self.container = container
+        store = SwiftDataHabitStore(container: container)
+        milestones = MilestoneNotifier(store: store)
+    }
+
+    /// nil when the database can't be opened, e.g. the disk is full.
+    static func open(inMemory: Bool) -> AppServices? {
+        guard let services = (try? ModelContainer.quitter(inMemory: inMemory)).map(AppServices.init(container:)) else { return nil }
+        if inMemory { services.seedForUITests() }
+        return services
+    }
+
+    /// UI tests can start with a habit last done N days ago: `-uiTestingHabitDaysAgo N`.
+    /// Only for the throwaway in-memory database.
+    private func seedForUITests() {
+        let arguments = ProcessInfo.processInfo.arguments
+        guard let index = arguments.firstIndex(of: "-uiTestingHabitDaysAgo"), index + 1 < arguments.count,
+              let days = Int(arguments[index + 1]) else { return }
+        _ = try? store.add(HabitDraft(
+            kind: .smoking, name: "Cigarettes", lastDoneAt: .now.addingTimeInterval(-Double(days) * 86_400),
+            costPerDay: nil, minutesPerDay: nil
+        ))
+    }
+}
+
+/// Shown instead of crashing when the database can't be opened. Nothing is deleted.
+struct DatabaseErrorView: View {
+    let onTryAgain: () -> Void
+
+    var body: some View {
+        ContentUnavailableView {
+            Text("Couldn't open your data")
+        } description: {
+            Text("Something went wrong while opening your habits. Nothing was deleted.")
+        } actions: {
+            Button("Try again", action: onTryAgain)
+                .buttonStyle(.borderedProminent)
+                .tint(Palette.primary)
+        }
+        .background(Palette.background.ignoresSafeArea())
     }
 }
 
@@ -35,8 +86,6 @@ enum Route: Hashable {
     case habitDetail(habitId: UUID)
     case editHabit(habitId: UUID)
     case settings
-    /// A screen that isn't built yet, by title.
-    case comingSoon(String)
 }
 
 private extension View {
@@ -139,8 +188,6 @@ struct RouteDestination: View {
             }))
         case .settings:
             SettingsView(viewModel: SettingsViewModel(store: store, milestones: milestones, onAllDeleted: onAllDeleted))
-        case .comingSoon(let title):
-            ComingSoonView(title: title)
         }
     }
 }

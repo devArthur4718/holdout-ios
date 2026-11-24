@@ -13,9 +13,9 @@ struct Benefit: Identifiable, Equatable {
 final class WelcomeViewModel {
     let benefits: [Benefit] = [
         Benefit(id: "savings", symbol: "dollarsign.circle",
-                text: "Cost and time you'd normally spend become live savings"),
+                text: "See the money and time you didn't spend add up, live"),
         Benefit(id: "trophies", symbol: "trophy",
-                text: "Trophies at every hour and day milestone"),
+                text: "A trophy at every goal: 1 day, 1 week, 30 days, 6 months, 1 year…"),
         Features.ads
             ? Benefit(id: "ads", symbol: "megaphone",
                       text: "Free forever, funded by ads — never on relapse screens")
