@@ -34,7 +34,9 @@ struct PersonalGoal: Equatable, Identifiable {
 
     /// Trimmed and cut to `maxNameLength`; nil when nothing is left.
     static func cleanName(_ text: String) -> String? {
-        let trimmed = String(text.trimmingCharacters(in: .whitespacesAndNewlines).prefix(maxNameLength))
+        // Trimmed again after the cut, which can end on a space.
+        let cut = String(text.trimmingCharacters(in: .whitespacesAndNewlines).prefix(maxNameLength))
+        let trimmed = cut.trimmingCharacters(in: .whitespacesAndNewlines)
         return trimmed.isEmpty ? nil : trimmed
     }
 }

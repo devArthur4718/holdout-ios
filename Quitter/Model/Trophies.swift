@@ -16,10 +16,13 @@ extension Habit {
         var result: [Streak] = []
         var start = trackingSince
         for slip in slips.sorted(by: { $0.at < $1.at }) {
-            result.append(Streak(start: start, end: slip.at, seconds: max(0, Int(slip.at.timeIntervalSince(start)))))
-            start = max(start, slip.at)
+            // A slip dated before the previous one can't end a streak before it began.
+            let end = max(slip.at, start)
+            result.append(Streak(start: start, end: end, seconds: Int(end.timeIntervalSince(start))))
+            start = end
         }
-        result.append(Streak(start: lastDoneAt, end: nil, seconds: max(0, Int(now.timeIntervalSince(lastDoneAt)))))
+        let currentStart = max(lastDoneAt, start)
+        result.append(Streak(start: currentStart, end: nil, seconds: max(0, Int(now.timeIntervalSince(currentStart)))))
         return result
     }
 }
@@ -74,9 +77,12 @@ struct StreakRow: Equatable {
 }
 
 enum StreakHistory {
-    /// Newest first, so the current streak is on top.
+    /// Past streaks shorter than this (e.g. two slips logged in a row) are left out.
+    static let minimumPastSeconds = 60
+
+    /// Newest first, so the current streak is on top. The current streak is always kept.
     static func rows(_ streaks: [Streak]) -> [StreakRow] {
-        let newestFirst = Array(streaks.reversed())
+        let newestFirst = streaks.reversed().filter { $0.isCurrent || $0.seconds >= minimumPastSeconds }
         let best = newestFirst.count > 1 ? newestFirst.indices.max { a, b in
             // On equal length the lower index (the newer streak) counts as larger, so it wins.
             newestFirst[a].seconds < newestFirst[b].seconds || (newestFirst[a].seconds == newestFirst[b].seconds && a > b)

@@ -49,13 +49,15 @@ struct NoHabitsView: View {
 
     var body: some View {
         ContentUnavailableView {
-            Text("No habits yet")
+            EmptyView()
         } description: {
             Text(message)
         } actions: {
-            Button("Add habit", action: onAddHabit)
-                .buttonStyle(.borderedProminent)
-                .tint(Palette.primary)
+            Button(action: onAddHabit) {
+                Label("Add habit", systemImage: "plus").frame(minHeight: 36)
+            }
+            .buttonStyle(.borderedProminent)
+            .tint(Palette.primary)
         }
     }
 }

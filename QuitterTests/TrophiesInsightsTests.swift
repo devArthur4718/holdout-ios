@@ -365,3 +365,55 @@ struct InsightsViewModelTests {
         #expect(rows.map(\.isBest) == [true, false])
     }
 }
+
+struct ReviewFixTests {
+    let start = Date(timeIntervalSince1970: 1_795_000_000)
+    func at(_ seconds: Double) -> Date { start.addingTimeInterval(seconds) }
+
+    @Test func aSlipDatedBeforeTheLastOneNeverMakesANegativeStreak() {
+        var h = Habit(id: UUID(), kind: .smoking, name: "Cigarettes", lastDoneAt: at(1_000), costPerDay: nil, minutesPerDay: nil)
+        h.bankedSeconds = 100 // tracking since at(900)
+        // Slips dated before tracking began (e.g. logged with an earlier time) end streaks of zero, not negative ones.
+        let slips = [Slip(habitId: h.id, at: at(800), trigger: nil), Slip(habitId: h.id, at: at(500), trigger: nil)]
+        let streaks = h.streaks(slips: slips, now: at(1_200))
+        #expect(streaks.allSatisfy { $0.seconds >= 0 && ($0.end ?? $0.start) >= $0.start })
+        #expect(streaks.map(\.seconds) == [0, 0, 200])
+        #expect(streaks.last?.start == at(1_000))
+    }
+
+    @Test func theCurrentStreakStartsNoEarlierThanTheLastSlip() {
+        let h = Habit(id: UUID(), kind: .smoking, name: "Cigarettes", lastDoneAt: at(0), costPerDay: nil, minutesPerDay: nil)
+        let streaks = h.streaks(slips: [Slip(habitId: h.id, at: at(300), trigger: nil)], now: at(1_000))
+        #expect(streaks.last == Streak(start: at(300), end: nil, seconds: 700))
+    }
+
+    @Test func pastStreaksUnderAMinuteAreLeftOutButTheCurrentOneStays() {
+        let streaks = [
+            Streak(start: at(0), end: at(30), seconds: 30),
+            Streak(start: at(30), end: at(50), seconds: 20),
+            Streak(start: at(50), end: nil, seconds: 10),
+        ]
+        let rows = StreakHistory.rows(streaks)
+        #expect(rows.map(\.streak.seconds) == [10])
+        #expect(rows.map(\.isBest) == [false]) // only one row left, so no Best and the "past streaks" line shows
+
+        let more = StreakHistory.rows([Streak(start: at(0), end: at(600), seconds: 600)] + streaks)
+        #expect(more.map(\.streak.seconds) == [10, 600])
+        #expect(more.map(\.isBest) == [false, true])
+    }
+
+    @Test func aNameCutAtFortyCharactersLosesItsTrailingSpace() {
+        let name = String(repeating: "a", count: 39) + " tail"
+        #expect(PersonalGoal.cleanName(name) == String(repeating: "a", count: 39))
+    }
+
+    @Test func csvTimesAreUTCWithWholeSeconds() {
+        let id = UUID()
+        let when = Date(timeIntervalSince1970: 1_795_471_531.789) // 2026-11-23T22:05:31.789Z
+        let habit = Habit(id: id, kind: .smoking, name: "Cigarettes", lastDoneAt: when, costPerDay: nil, minutesPerDay: nil)
+        let csv = buildExportCSV(habits: [habit], slips: [Slip(habitId: id, at: when, trigger: nil)], urges: [], reasons: [])
+        let rows = csv.components(separatedBy: "\r\n")
+        #expect(rows[1] == "habit,Cigarettes,smoking,2026-11-23T22:05:31Z,,")
+        #expect(rows[2] == "slip,Cigarettes,,2026-11-23T22:05:31Z,,")
+    }
+}

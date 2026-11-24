@@ -136,7 +136,7 @@ QuitterUITests/     XCUITest: the full user journey
 
 ## Testing
 
-122 automated tests: 117 unit tests with Swift Testing and 5 UI tests.
+127 automated tests: 122 unit tests with Swift Testing and 5 UI tests.
 
 - **Domain rules** — the goal ladder and its labels in English, Portuguese and Spanish, the progress arc's text, progress and savings across slips, personal bests, calendar months, the savings chart, urge phases, CSV escaping, and notification timing (quiet hours, a milestone reached at night, the goal ladder, local time zones), the notification text, the 60-notification cap, personal goals in the ladder and their validation, trophies earned across slips and their dates, the trophy list cut-off, time-of-day and weekday buckets (including the 22:00–05:00 wrap and the locale's first weekday), and the streak history.
 - **ViewModels** — every screen against an in-memory SwiftData store, with injected clocks and a fake notifier; a store that fails on writes checks the "Couldn't save" alert.

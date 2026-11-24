@@ -10,7 +10,8 @@ func buildExportCSV(
     goals: [PersonalGoal] = []
 ) -> String {
     let names = Dictionary(habits.map { ($0.id, $0.name) }, uniquingKeysWith: { first, _ in first })
-    let time = { (date: Date) in date.formatted(.iso8601) }
+    // ISO-8601 in UTC with whole seconds, e.g. 2026-11-23T22:05:31Z (the same on Android).
+    let time = { (date: Date) in date.formatted(Date.ISO8601FormatStyle(includingFractionalSeconds: false, timeZone: .gmt)) }
     var rows = [["type", "habit", "kind", "start", "end", "detail"]]
     for habit in habits {
         let detail = [
