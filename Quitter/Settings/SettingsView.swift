@@ -47,7 +47,7 @@ struct SettingsView: View {
                 }
             }
             Section("Your data") {
-                ShareLink(item: viewModel.export(), preview: SharePreview("Quitter export")) {
+                ShareLink(item: viewModel.export(), preview: SharePreview("Holdout export")) {
                     Label {
                         VStack(alignment: .leading, spacing: 2) {
                             Text("Export as CSV").foregroundStyle(Palette.onSurface)
@@ -99,7 +99,7 @@ struct SettingsView: View {
             Text("All habits, slips and reasons are deleted from this phone. This can't be undone. Export first if you want a copy.")
         }
         .task(id: scenePhase) { await viewModel.refreshNotifications() }
-        .alert("Notifications are off for Quitter.", isPresented: $viewModel.notificationsBlocked) {
+        .alert("Notifications are off for Holdout.", isPresented: $viewModel.notificationsBlocked) {
             Button("Open Settings") { openNotificationSettings(openURL) }
             Button("Cancel", role: .cancel) {}
         } message: {

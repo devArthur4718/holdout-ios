@@ -1,8 +1,8 @@
-# Quitter for iOS
+# Holdout for iOS
 
 **One counter. That's the whole idea.**
 
-Your last cigarette, drink or bet starts the clock. Quitter shows how long you've held out, the money you didn't spend and the time you got back, for smoking, alcohol, sugar, vaping, social media or gambling. No account, no ads, no tracking: everything stays on your iPhone.
+Your last cigarette, drink or bet starts the clock. Holdout shows how long you've held out, the money you didn't spend and the time you got back, for smoking, alcohol, sugar, vaping, social media or gambling. No account, no ads, no tracking: everything stays on your iPhone.
 
 ![iOS 17+](https://img.shields.io/badge/iOS-17%2B-000000?logo=apple&logoColor=white)
 ![Swift 6](https://img.shields.io/badge/Swift-6-F05138?logo=swift&logoColor=white)
@@ -15,11 +15,11 @@ Your last cigarette, drink or bet starts the clock. Quitter shows how long you'v
   <img src="docs/screenshots/trophies.png" width="200" alt="Trophies: 1 day and 1 week earned, 30 days next">
 </p>
 
-> The Android app, built natively in Kotlin and Jetpack Compose with the same features, lives in [quitter-android](https://github.com/devArthur4718/quitter-android).
+> The Android app, built natively in Kotlin and Jetpack Compose with the same features, lives in [holdout-android](https://github.com/devArthur4718/holdout-android).
 
 ---
 
-## Why Quitter is different
+## Why Holdout is different
 
 - **Private by design.** No account, no server, no analytics, no ads, and no networking code at all — the app has nothing that could send your data anywhere. Your iPhone's own backup can keep a copy, so a new phone doesn't cost you your streak.
 - **A slip is not a failure.** Logging a slip restarts the counter, but your longest streak and all the money and time you've saved are kept. The wording never shames.
@@ -151,8 +151,8 @@ English, Brazilian Portuguese and Spanish in one String Catalog, with real plura
 Requirements: Xcode 16 or later (developed with Xcode 27).
 
 ```bash
-git clone git@github.com:devArthur4718/quitter-ios.git
-cd quitter-ios
+git clone git@github.com:devArthur4718/holdout-ios.git
+cd holdout-ios
 open Quitter.xcodeproj
 ```
 

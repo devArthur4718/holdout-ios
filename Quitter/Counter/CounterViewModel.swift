@@ -11,7 +11,7 @@ final class CounterViewModel {
 
     /// Trophy notifications are on.
     private(set) var notificationsOn = false
-    /// The user wants them, but iOS has them turned off for Quitter.
+    /// The user wants them, but iOS has them turned off for Holdout.
     private(set) var notificationsBlocked = false
 
     private let onGoToHabits: () -> Void

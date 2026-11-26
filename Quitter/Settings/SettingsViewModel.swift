@@ -7,7 +7,7 @@ final class SettingsViewModel {
     var deleteFailed = false
     /// Trophy notifications are on.
     private(set) var milestonesOn = false
-    /// The user turned them on, but iOS has them off for Quitter.
+    /// The user turned them on, but iOS has them off for Holdout.
     var notificationsBlocked = false
 
     private let store: HabitStore

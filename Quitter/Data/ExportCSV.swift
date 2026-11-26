@@ -32,10 +32,10 @@ func buildExportCSV(
     return rows.map { $0.map(csvField).joined(separator: ",") }.joined(separator: "\r\n") + "\r\n"
 }
 
-/// "quitter-2026-11-23.csv", dated with the local calendar day.
+/// "holdout-2026-11-23.csv", dated with the local calendar day.
 func exportFileName(on date: Date, calendar: Calendar) -> String {
     let day = calendar.dateComponents([.year, .month, .day], from: date)
-    return String(format: "quitter-%04d-%02d-%02d.csv", day.year ?? 0, day.month ?? 0, day.day ?? 0)
+    return String(format: "holdout-%04d-%02d-%02d.csv", day.year ?? 0, day.month ?? 0, day.day ?? 0)
 }
 
 /// Quotes a field when it holds a comma, quote or line break, doubling any quotes inside.

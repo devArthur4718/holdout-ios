@@ -52,7 +52,7 @@ struct CounterView: View {
                 .padding(.top, 28)
 
                 if Features.ads {
-                    Text("Quitter is free and ad-supported. Ads never appear while you log a slip.")
+                    Text("Holdout is free and ad-supported. Ads never appear while you log a slip.")
                         .font(.caption2)
                         .foregroundStyle(Palette.outline)
                 }
@@ -76,7 +76,7 @@ struct CounterView: View {
                 .foregroundStyle(Palette.onSurfaceVariant)
         } else if viewModel.notificationsBlocked {
             VStack(spacing: 4) {
-                Text("Notifications are off for Quitter.")
+                Text("Notifications are off for Holdout.")
                     .font(.subheadline)
                     .foregroundStyle(Palette.onSurfaceVariant)
                 Button("Open Settings") { openNotificationSettings(openURL) }
@@ -116,7 +116,7 @@ struct CounterView: View {
         .dynamicTypeSize(.accessibility3)
 }
 
-/// Quitter's notification page in the Settings app.
+/// Holdout's notification page in the Settings app.
 @MainActor
 func openNotificationSettings(_ openURL: OpenURLAction) {
     if let url = URL(string: UIApplication.openNotificationSettingsURLString) { openURL(url) }

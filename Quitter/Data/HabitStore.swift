@@ -242,7 +242,7 @@ enum SchemaV3: VersionedSchema {
 }
 
 /// How an older database on the phone is brought up to the current schema.
-enum QuitterMigrationPlan: SchemaMigrationPlan {
+enum HoldoutMigrationPlan: SchemaMigrationPlan {
     static var schemas: [any VersionedSchema.Type] { [SchemaV1.self, SchemaV2.self, SchemaV3.self] }
     static var stages: [MigrationStage] {
         [
@@ -255,14 +255,14 @@ enum QuitterMigrationPlan: SchemaMigrationPlan {
 extension ModelContainer {
     /// The app's database, opened through the migration plan. `inMemory` is for tests and previews:
     /// nothing is written to disk. `url` places it somewhere else, for tests.
-    static func quitter(inMemory: Bool = false, url: URL? = nil) throws -> ModelContainer {
+    static func holdout(inMemory: Bool = false, url: URL? = nil) throws -> ModelContainer {
         let schema = Schema(versionedSchema: SchemaV3.self)
         let config = if let url {
             ModelConfiguration(schema: schema, url: url)
         } else {
             ModelConfiguration(schema: schema, isStoredInMemoryOnly: inMemory)
         }
-        return try ModelContainer(for: schema, migrationPlan: QuitterMigrationPlan.self, configurations: config)
+        return try ModelContainer(for: schema, migrationPlan: HoldoutMigrationPlan.self, configurations: config)
     }
 }
 
@@ -270,6 +270,6 @@ extension SwiftDataHabitStore {
     /// A throwaway store for previews and tests.
     static func inMemory() -> SwiftDataHabitStore {
         // An in-memory database can't fail to open the way a file on disk can.
-        SwiftDataHabitStore(container: try! .quitter(inMemory: true))
+        SwiftDataHabitStore(container: try! .holdout(inMemory: true))
     }
 }

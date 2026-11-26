@@ -3,7 +3,7 @@ import SwiftUI
 import UserNotifications
 
 @main
-struct QuitterApp: App {
+struct HoldoutApp: App {
     /// UI tests launch with `-uiTesting` to start from an empty, throwaway database.
     private static let inMemory = ProcessInfo.processInfo.arguments.contains("-uiTesting")
 
@@ -44,7 +44,7 @@ final class AppServices {
 
     /// nil when the database can't be opened, e.g. the disk is full.
     static func open(inMemory: Bool) -> AppServices? {
-        guard let services = (try? ModelContainer.quitter(inMemory: inMemory)).map(AppServices.init(container:)) else { return nil }
+        guard let services = (try? ModelContainer.holdout(inMemory: inMemory)).map(AppServices.init(container:)) else { return nil }
         if inMemory { services.seedForUITests() }
         return services
     }

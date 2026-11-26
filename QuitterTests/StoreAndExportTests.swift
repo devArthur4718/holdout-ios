@@ -9,22 +9,22 @@ struct DatabaseMigrationTests {
         let folder = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: folder) }
-        let url = folder.appendingPathComponent("quitter.store")
+        let url = folder.appendingPathComponent("holdout.store")
 
         do {
-            let store = SwiftDataHabitStore(container: try .quitter(url: url))
+            let store = SwiftDataHabitStore(container: try .holdout(url: url))
             _ = try store.add(HabitDraft(kind: .vaping, name: "Vape", lastDoneAt: .now, costPerDay: nil, minutesPerDay: 30))
         }
-        let reopened = SwiftDataHabitStore(container: try .quitter(url: url))
+        let reopened = SwiftDataHabitStore(container: try .holdout(url: url))
         #expect(reopened.allHabits().map(\.name) == ["Vape"])
-        #expect(QuitterMigrationPlan.schemas.count == 3)
+        #expect(HoldoutMigrationPlan.schemas.count == 3)
     }
 
     @Test func aVersionOneStoreIsMigratedAndTakesPersonalGoals() throws {
         let folder = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: folder) }
-        let url = folder.appendingPathComponent("quitter.store")
+        let url = folder.appendingPathComponent("holdout.store")
 
         // A database as the first release wrote it, without personal goals.
         do {
@@ -34,7 +34,7 @@ struct DatabaseMigrationTests {
             try container.mainContext.save()
         }
 
-        let store = SwiftDataHabitStore(container: try .quitter(url: url))
+        let store = SwiftDataHabitStore(container: try .holdout(url: url))
         let habit = try #require(store.allHabits().first)
         #expect(habit.name == "Sweets")
         try store.addPersonalGoal(habitId: habit.id, days: 45, name: "Beach trip", at: .now)
@@ -45,7 +45,7 @@ struct DatabaseMigrationTests {
         let folder = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
         try FileManager.default.createDirectory(at: folder, withIntermediateDirectories: true)
         defer { try? FileManager.default.removeItem(at: folder) }
-        let url = folder.appendingPathComponent("quitter.store")
+        let url = folder.appendingPathComponent("holdout.store")
         let start = Date(timeIntervalSince1970: 1_795_000_000)
 
         // A database from before the urge timer was removed.
@@ -64,7 +64,7 @@ struct DatabaseMigrationTests {
             try context.save()
         }
 
-        let store = SwiftDataHabitStore(container: try .quitter(url: url))
+        let store = SwiftDataHabitStore(container: try .holdout(url: url))
         #expect(store.allHabits().map(\.name) == ["Cigarettes"])
         #expect(store.slips(habitId: habitId).map(\.trigger) == [.stress])
         #expect(store.reasons(habitId: habitId).map(\.text) == ["For my lungs"])
@@ -79,6 +79,6 @@ struct ExportFileNameTests {
         saoPaulo.timeZone = TimeZone(identifier: "America/Sao_Paulo")!
         // 01:30 UTC on 24 November is still 23 November in São Paulo.
         let date = try Date("2026-11-24T01:30:00Z", strategy: .iso8601)
-        #expect(exportFileName(on: date, calendar: saoPaulo) == "quitter-2026-11-23.csv")
+        #expect(exportFileName(on: date, calendar: saoPaulo) == "holdout-2026-11-23.csv")
     }
 }

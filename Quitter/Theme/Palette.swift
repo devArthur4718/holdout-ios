@@ -1,6 +1,6 @@
 import SwiftUI
 
-/// Brand colors from the Quitter design. Each one has a light and dark value in Assets.xcassets.
+/// Brand colors from the Holdout design. Each one has a light and dark value in Assets.xcassets.
 enum Palette {
     static let background = Color("Background")
     static let surfaceContainer = Color("SurfaceContainer")

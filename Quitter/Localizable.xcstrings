@@ -1524,18 +1524,18 @@
         }
       }
     },
-    "Notifications are off for Quitter.": {
+    "Notifications are off for Holdout.": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Las notificaciones de Quitter están desactivadas."
+            "value": "Las notificaciones de Holdout están desactivadas."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "As notificações do Quitter estão desativadas."
+            "value": "As notificações do Holdout estão desativadas."
           }
         }
       }
@@ -1732,50 +1732,50 @@
         }
       }
     },
-    "Quitter export": {
+    "Holdout export": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Exportación de Quitter"
+            "value": "Exportación de Holdout"
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "Exportação do Quitter"
+            "value": "Exportação do Holdout"
           }
         }
       }
     },
-    "Quitter is a simple app to track your progress as you quit certain habits. Whether it's cigarettes, drinking or anything else, you can lean on this tool for some support: it's free, there's no account to sign up for, and all your data stays on your phone.": {
+    "Holdout is a simple app to track your progress as you quit certain habits. Whether it's cigarettes, drinking or anything else, you can lean on this tool for some support: it's free, there's no account to sign up for, and all your data stays on your phone.": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Quitter es una app sencilla para seguir tu progreso al dejar ciertos hábitos. Ya sea el cigarrillo, la bebida o cualquier otra cosa, puedes apoyarte en esta herramienta, que es gratuita, sin registro de cuenta y con todos tus datos en tu teléfono, para tener algo de apoyo."
+            "value": "Holdout es una app sencilla para seguir tu progreso al dejar ciertos hábitos. Ya sea el cigarrillo, la bebida o cualquier otra cosa, puedes apoyarte en esta herramienta, que es gratuita, sin registro de cuenta y con todos tus datos en tu teléfono, para tener algo de apoyo."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "O Quitter é um app simples para acompanhar seu progresso ao deixar certos hábitos. Seja cigarro, bebida ou qualquer outra coisa, você pode se apoiar nesta ferramenta, que é gratuita, sem registro de conta e com todos os dados no seu celular, para ter algum apoio."
+            "value": "O Holdout é um app simples para acompanhar seu progresso ao deixar certos hábitos. Seja cigarro, bebida ou qualquer outra coisa, você pode se apoiar nesta ferramenta, que é gratuita, sem registro de conta e com todos os dados no seu celular, para ter algum apoio."
           }
         }
       }
     },
-    "Quitter is free and ad-supported. Ads never appear while you log a slip.": {
+    "Holdout is free and ad-supported. Ads never appear while you log a slip.": {
       "localizations": {
         "es": {
           "stringUnit": {
             "state": "translated",
-            "value": "Quitter es gratis y tiene anuncios. Nunca aparecen mientras registras una recaída."
+            "value": "Holdout es gratis y tiene anuncios. Nunca aparecen mientras registras una recaída."
           }
         },
         "pt-BR": {
           "stringUnit": {
             "state": "translated",
-            "value": "O Quitter é grátis e mantido por anúncios. Nunca há anúncios enquanto você registra uma recaída."
+            "value": "O Holdout é grátis e mantido por anúncios. Nunca há anúncios enquanto você registra uma recaída."
           }
         }
       }

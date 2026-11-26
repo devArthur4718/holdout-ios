@@ -25,7 +25,7 @@ extension EnvironmentValues {
 
 extension Notification.Name {
     /// Posted by the store after a habit is added, edited, reset or deleted.
-    static let habitsChanged = Notification.Name("app.quitter.habitsChanged")
+    static let habitsChanged = Notification.Name("app.holdout.habitsChanged")
 }
 
 /// A notification at each trophy. iOS can't run the app when one is delivered, so several are
