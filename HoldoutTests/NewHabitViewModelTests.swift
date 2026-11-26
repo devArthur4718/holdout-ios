@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import Quitter
+@testable import Holdout
 
 @MainActor
 struct NewHabitViewModelTests {

@@ -1,7 +1,7 @@
 import Foundation
 import SwiftData
 import Testing
-@testable import Quitter
+@testable import Holdout
 
 @MainActor
 struct DatabaseMigrationTests {

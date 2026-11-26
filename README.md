@@ -108,7 +108,7 @@ flowchart LR
 ## Project structure
 
 ```
-Quitter/
+Holdout/
 ├── App/            App entry, Route, RootView, feature flags
 ├── Model/          Pure rules: Habit, HabitProgress, Goals, PersonalGoal, Trophies, HabitHistory, Milestones
 ├── Data/           SwiftData records, HabitStore, CSV export
@@ -124,8 +124,8 @@ Quitter/
 ├── Components/     Shared views (progress arc, toast)
 ├── Theme/          Palette and metrics
 └── Localizable.xcstrings
-QuitterTests/       Swift Testing: model, ViewModels, store, notifications
-QuitterUITests/     XCUITest: the full user journey
+HoldoutTests/       Swift Testing: model, ViewModels, store, notifications
+HoldoutUITests/     XCUITest: the full user journey
 ```
 
 ## Testing
@@ -138,7 +138,7 @@ QuitterUITests/     XCUITest: the full user journey
 - **UI** — the full journey from Welcome to the first habit, a slip, the habit detail and its reasons, editing, deleting and Settings › Delete all data; the Trophies tab (earned, next, adding a personal goal). UI tests launch with `-uiTesting` for a throwaway in-memory database, and the test scheme runs in English whatever the simulator's language.
 
 ```bash
-xcodebuild test -project Quitter.xcodeproj -scheme Quitter \
+xcodebuild test -project Holdout.xcodeproj -scheme Holdout \
   -destination 'platform=iOS Simulator,name=iPhone 17 Pro'
 ```
 
@@ -153,7 +153,7 @@ Requirements: Xcode 16 or later (developed with Xcode 27).
 ```bash
 git clone git@github.com:devArthur4718/holdout-ios.git
 cd holdout-ios
-open Quitter.xcodeproj
+open Holdout.xcodeproj
 ```
 
 Pick an iPhone simulator and press **Run** (⌘R). To run on a device, set your team under *Signing & Capabilities*.

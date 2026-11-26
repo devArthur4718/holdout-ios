@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import Quitter
+@testable import Holdout
 
 struct HabitProgressTests {
     let start = Date(timeIntervalSince1970: 1_795_000_000)

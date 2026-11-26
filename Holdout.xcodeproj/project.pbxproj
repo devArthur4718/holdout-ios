@@ -12,37 +12,37 @@
 			containerPortal = A10000000000000000000001 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = A10000000000000000000101;
-			remoteInfo = Quitter;
+			remoteInfo = Holdout;
 		};
 		A10000000000000000000302 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A10000000000000000000001 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = A10000000000000000000101;
-			remoteInfo = Quitter;
+			remoteInfo = Holdout;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		A10000000000000000000011 /* Quitter.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Quitter.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A10000000000000000000012 /* QuitterTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuitterTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A10000000000000000000013 /* QuitterUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = QuitterUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10000000000000000000011 /* Holdout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Holdout.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10000000000000000000012 /* HoldoutTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HoldoutTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10000000000000000000013 /* HoldoutUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HoldoutUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		A10000000000000000000021 /* Quitter */ = {
+		A10000000000000000000021 /* Holdout */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Quitter;
+			path = Holdout;
 			sourceTree = "<group>";
 		};
-		A10000000000000000000022 /* QuitterTests */ = {
+		A10000000000000000000022 /* HoldoutTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = QuitterTests;
+			path = HoldoutTests;
 			sourceTree = "<group>";
 		};
-		A10000000000000000000023 /* QuitterUITests */ = {
+		A10000000000000000000023 /* HoldoutUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = QuitterUITests;
+			path = HoldoutUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -75,9 +75,9 @@
 		A10000000000000000000002 = {
 			isa = PBXGroup;
 			children = (
-				A10000000000000000000021 /* Quitter */,
-				A10000000000000000000022 /* QuitterTests */,
-				A10000000000000000000023 /* QuitterUITests */,
+				A10000000000000000000021 /* Holdout */,
+				A10000000000000000000022 /* HoldoutTests */,
+				A10000000000000000000023 /* HoldoutUITests */,
 				A10000000000000000000003 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -85,9 +85,9 @@
 		A10000000000000000000003 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				A10000000000000000000011 /* Quitter.app */,
-				A10000000000000000000012 /* QuitterTests.xctest */,
-				A10000000000000000000013 /* QuitterUITests.xctest */,
+				A10000000000000000000011 /* Holdout.app */,
+				A10000000000000000000012 /* HoldoutTests.xctest */,
+				A10000000000000000000013 /* HoldoutUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -95,9 +95,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		A10000000000000000000101 /* Quitter */ = {
+		A10000000000000000000101 /* Holdout */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A10000000000000000000501 /* Build configuration list for PBXNativeTarget "Quitter" */;
+			buildConfigurationList = A10000000000000000000501 /* Build configuration list for PBXNativeTarget "Holdout" */;
 			buildPhases = (
 				A10000000000000000000200 /* Sources */,
 				A10000000000000000000201 /* Frameworks */,
@@ -108,16 +108,16 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				A10000000000000000000021 /* Quitter */,
+				A10000000000000000000021 /* Holdout */,
 			);
-			name = Quitter;
-			productName = Quitter;
-			productReference = A10000000000000000000011 /* Quitter.app */;
+			name = Holdout;
+			productName = Holdout;
+			productReference = A10000000000000000000011 /* Holdout.app */;
 			productType = "com.apple.product-type.application";
 		};
-		A10000000000000000000102 /* QuitterTests */ = {
+		A10000000000000000000102 /* HoldoutTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A10000000000000000000502 /* Build configuration list for PBXNativeTarget "QuitterTests" */;
+			buildConfigurationList = A10000000000000000000502 /* Build configuration list for PBXNativeTarget "HoldoutTests" */;
 			buildPhases = (
 				A10000000000000000000210 /* Sources */,
 				A10000000000000000000211 /* Frameworks */,
@@ -129,16 +129,16 @@
 				A10000000000000000000311 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				A10000000000000000000022 /* QuitterTests */,
+				A10000000000000000000022 /* HoldoutTests */,
 			);
-			name = QuitterTests;
-			productName = QuitterTests;
-			productReference = A10000000000000000000012 /* QuitterTests.xctest */;
+			name = HoldoutTests;
+			productName = HoldoutTests;
+			productReference = A10000000000000000000012 /* HoldoutTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		A10000000000000000000103 /* QuitterUITests */ = {
+		A10000000000000000000103 /* HoldoutUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = A10000000000000000000503 /* Build configuration list for PBXNativeTarget "QuitterUITests" */;
+			buildConfigurationList = A10000000000000000000503 /* Build configuration list for PBXNativeTarget "HoldoutUITests" */;
 			buildPhases = (
 				A10000000000000000000220 /* Sources */,
 				A10000000000000000000221 /* Frameworks */,
@@ -150,11 +150,11 @@
 				A10000000000000000000312 /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
-				A10000000000000000000023 /* QuitterUITests */,
+				A10000000000000000000023 /* HoldoutUITests */,
 			);
-			name = QuitterUITests;
-			productName = QuitterUITests;
-			productReference = A10000000000000000000013 /* QuitterUITests.xctest */;
+			name = HoldoutUITests;
+			productName = HoldoutUITests;
+			productReference = A10000000000000000000013 /* HoldoutUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 /* End PBXNativeTarget section */
@@ -180,7 +180,7 @@
 					};
 				};
 			};
-			buildConfigurationList = A10000000000000000000500 /* Build configuration list for PBXProject "Quitter" */;
+			buildConfigurationList = A10000000000000000000500 /* Build configuration list for PBXProject "Holdout" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -196,9 +196,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				A10000000000000000000101 /* Quitter */,
-				A10000000000000000000102 /* QuitterTests */,
-				A10000000000000000000103 /* QuitterUITests */,
+				A10000000000000000000101 /* Holdout */,
+				A10000000000000000000102 /* HoldoutTests */,
+				A10000000000000000000103 /* HoldoutUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -254,12 +254,12 @@
 /* Begin PBXTargetDependency section */
 		A10000000000000000000311 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A10000000000000000000101 /* Quitter */;
+			target = A10000000000000000000101 /* Holdout */;
 			targetProxy = A10000000000000000000301 /* PBXContainerItemProxy */;
 		};
 		A10000000000000000000312 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = A10000000000000000000101 /* Quitter */;
+			target = A10000000000000000000101 /* Holdout */;
 			targetProxy = A10000000000000000000302 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
@@ -330,7 +330,7 @@
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_FILE = "Quitter-Info.plist";
+				INFOPLIST_FILE = "Holdout-Info.plist";
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -358,7 +358,7 @@
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_FILE = "Quitter-Info.plist";
+				INFOPLIST_FILE = "Holdout-Info.plist";
 				INFOPLIST_KEY_UIStatusBarStyle = UIStatusBarStyleLightContent;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -385,7 +385,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				TARGETED_DEVICE_FAMILY = 1;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Quitter.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Quitter";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Holdout.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Holdout";
 			};
 			name = Debug;
 		};
@@ -401,7 +401,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				TARGETED_DEVICE_FAMILY = 1;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Quitter.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Quitter";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Holdout.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Holdout";
 			};
 			name = Release;
 		};
@@ -416,7 +416,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				TARGETED_DEVICE_FAMILY = 1;
-				TEST_TARGET_NAME = Quitter;
+				TEST_TARGET_NAME = Holdout;
 			};
 			name = Debug;
 		};
@@ -431,14 +431,14 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				TARGETED_DEVICE_FAMILY = 1;
-				TEST_TARGET_NAME = Quitter;
+				TEST_TARGET_NAME = Holdout;
 			};
 			name = Release;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		A10000000000000000000500 /* Build configuration list for PBXProject "Quitter" */ = {
+		A10000000000000000000500 /* Build configuration list for PBXProject "Holdout" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A10000000000000000000401 /* Debug */,
@@ -447,7 +447,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A10000000000000000000501 /* Build configuration list for PBXNativeTarget "Quitter" */ = {
+		A10000000000000000000501 /* Build configuration list for PBXNativeTarget "Holdout" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A10000000000000000000411 /* Debug */,
@@ -456,7 +456,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A10000000000000000000502 /* Build configuration list for PBXNativeTarget "QuitterTests" */ = {
+		A10000000000000000000502 /* Build configuration list for PBXNativeTarget "HoldoutTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A10000000000000000000421 /* Debug */,
@@ -465,7 +465,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		A10000000000000000000503 /* Build configuration list for PBXNativeTarget "QuitterUITests" */ = {
+		A10000000000000000000503 /* Build configuration list for PBXNativeTarget "HoldoutUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				A10000000000000000000431 /* Debug */,

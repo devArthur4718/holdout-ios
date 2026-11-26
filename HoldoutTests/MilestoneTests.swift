@@ -1,7 +1,7 @@
 import Foundation
 import Testing
 import UserNotifications
-@testable import Quitter
+@testable import Holdout
 
 struct MilestoneTests {
     var utc: Calendar = {

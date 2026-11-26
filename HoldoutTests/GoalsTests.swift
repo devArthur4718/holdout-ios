@@ -1,6 +1,6 @@
 import Foundation
 import Testing
-@testable import Quitter
+@testable import Holdout
 
 struct GoalsTests {
     let en = Locale(identifier: "en_US")

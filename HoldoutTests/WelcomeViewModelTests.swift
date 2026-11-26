@@ -1,5 +1,5 @@
 import Testing
-@testable import Quitter
+@testable import Holdout
 
 @MainActor
 struct WelcomeViewModelTests {
